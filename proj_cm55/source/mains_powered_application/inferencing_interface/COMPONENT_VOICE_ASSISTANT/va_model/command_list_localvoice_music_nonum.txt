@@ -1,0 +1,65 @@
+play music
+play track
+play the music
+play the track
+start music
+start track
+start the music
+start the track
+can you play music
+can you play track
+can you play the music
+can you play the track
+can you start music
+can you start track
+can you start the music
+can you start the track
+end music
+end track
+end the music
+end the track
+can you end music
+can you end track
+can you end the music
+can you end the track
+pause music
+pause track
+pause the music
+pause the track
+can you pause music
+can you pause track
+can you pause the music
+can you pause the track
+next track
+switch to next track
+go to next track
+can you next track
+can you switch to next track
+can you go to next track
+previous track
+switch to previous track
+go to previous track
+can you previous track
+can you switch to previous track
+can you go to previous track
+raise volume
+can you raise volume
+lower volume
+can you lower volume
+set volume to level zero
+can you set volume to level zero
+set volume to level one
+can you set volume to level one
+set volume to level two
+can you set volume to level two
+set volume to level three
+can you set volume to level three
+set volume to level four
+can you set volume to level four
+set volume to level five
+can you set volume to level five
+I can't hear you
+I cannot hear you
+turn up the volume please
+Music is too loud
+turn down the volume please

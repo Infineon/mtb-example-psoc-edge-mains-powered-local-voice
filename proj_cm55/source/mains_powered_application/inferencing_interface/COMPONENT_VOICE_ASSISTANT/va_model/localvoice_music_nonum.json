@@ -1,0 +1,471 @@
+{
+    "projectName": "localvoice_music_nonum",
+    "settings": {
+        "dict": "English-US",
+        "op_cond_db": 10,
+        "arm_core_id": "U55",
+        "nlu_timeout_ms": 0,
+        "nlu_sensitivity": 0,
+        "wwd_sensitivity": 0,
+        "nlu_pos_silence_ms": 300,
+        "nlu_pre_silence_ms": 0,
+        "wwd_pos_silence_ms": 0,
+        "wwd_pre_silence_ms": 200
+    },
+    "wakewords": [
+        {
+            "interjections": [
+                "OK"
+            ],
+            "word": "Infineon",
+            "phoneme": []
+        }
+    ],
+    "intents": [
+        {
+            "name": "play_music",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "play",
+                            "start"
+                        ]
+                    }
+                },
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "the"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "music",
+                            "track"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "end_music",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "end"
+                        ]
+                    }
+                },
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "the"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "music",
+                            "track"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "pause_music",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "pause"
+                        ]
+                    }
+                },
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "the"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "music",
+                            "track"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "next_track",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "switch to",
+                            "go to"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "next"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "track"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "previous_track",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "switch to",
+                            "go to"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "previous"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "track"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "raise_volume",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "raise"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "volume"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "lower_volume",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "lower"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "volume"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_0",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level zero"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_1",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level one"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_2",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level two"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_3",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level three"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_4",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level four"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "vol_level_5",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "set volume to level five"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "raise_volume_level",
+            "nodes": [
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "I can't hear you",
+                            "I cannot hear you",
+                            "turn up the volume please"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "lower_volume_level",
+            "nodes": [
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "Music is too loud",
+                            "turn down the volume please"
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "variables": []
+}

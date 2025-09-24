@@ -1,0 +1,70 @@
+{
+    "aec": {
+        "aec_reference": "none",
+        "aec_state": "on",
+        "bulk_delay_ms": 1,
+        "echo_tail_ms": 64
+    },
+    "app": "AFE",
+    "bf": {
+        "angle_range_a": 0,
+        "angle_range_b": 180,
+        "bf_state": "on",
+        "interference_canceller": "low",
+        "mic_distance_mm": 42,
+        "num_beams": 1
+    },
+    "dereverberation": {
+        "dereverberation_state": "on"
+    },
+    "echo_suppression": {
+        "echo_suppressor": "low",
+        "es_state": "on"
+    },
+    "filetype": "modustoolbox-afe-configurator",
+    "formatVersion": "1",
+    "hpf": {
+        "hpf_cutoff_hz": 100,
+        "hpf_state": "on"
+    },
+    "input": {
+        "frame_rate_sps": 16000,
+        "frame_size_ms": 10,
+        "input_gain_db": 20,
+        "input_source": "mic",
+        "number_of_channels": 2,
+        "software_input_gain_db1": 0,
+        "software_input_gain_db2": 0
+    },
+    "lastSavedWith": "Audio Front-End Configurator",
+    "lastSavedWithVersion": "1.50.0",
+    "noise_suppression": {
+        "ns_db": 20,
+        "ns_state": "on"
+    },
+    "speaker": {
+        "use_pc_speaker": "no",
+        "use_target_speaker": "no"
+    },
+    "toolsPackage": "DEEPCRAFT™ Audio Enhancement Tech Pack 1.0.0",
+    "uart": {
+        "baudrate": 115200,
+        "data_bits": 8,
+        "parity": "none",
+        "stop_bits": 1
+    },
+    "usb": {
+        "channel_0": "Input[0]",
+        "channel_1": "Input[1]",
+        "channel_2": "Output",
+        "channel_3": "AEC Ref"
+    },
+    "usb_output": {
+        "outputchannel_0": "Speaker",
+        "outputchannel_1": "Speaker"
+    },
+    "wav_files": {
+        "aef_input": "../../../../../../../afe_config_app/mtb-example-psoc-edge-afe-application_1/afe_test_stream/afe_test_stream.wav",
+        "pc_speaker": ""
+    }
+}
