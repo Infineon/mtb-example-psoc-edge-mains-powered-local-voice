@@ -168,6 +168,7 @@ Document title: *CE242044* – *PSOC&trade; Edge MCU: Mains-powered local voice*
  ------- | ---------------------
  1.x.0   | New code example <br> Early access release
  2.0.0   | GitHub release
+ 2.0.1   | Fix asset dependencies to latest tag for github release
 <br>
 
 

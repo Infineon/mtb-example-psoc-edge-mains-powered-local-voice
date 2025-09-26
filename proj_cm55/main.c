@@ -141,7 +141,7 @@ int main(void)
         /* Initialize retarget-io */
     app_retarget_io_init();
 
-    /* Init high perfomance/CM55 core local voice application */
+    /* Init high performance/CM55 core local voice application */
     mains_powered_local_voice();
 
     /* Start the RTOS Scheduler */
