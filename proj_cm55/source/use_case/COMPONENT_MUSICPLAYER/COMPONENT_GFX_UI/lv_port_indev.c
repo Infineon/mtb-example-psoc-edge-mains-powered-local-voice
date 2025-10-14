@@ -80,7 +80,7 @@
 
 mtb_ctp_ft5406_config_t ft5406_config =
 {
-    .scb_inst    = CYBSP_I2C_CONTROLLER_HW,
+    .i2c_base    = CYBSP_I2C_CONTROLLER_HW,
     .i2c_context = &disp_touch_i2c_controller_context
 };
 

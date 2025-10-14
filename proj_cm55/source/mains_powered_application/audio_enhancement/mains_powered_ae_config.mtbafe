@@ -30,14 +30,14 @@
     "input": {
         "frame_rate_sps": 16000,
         "frame_size_ms": 10,
-        "input_gain_db": 20,
+        "input_gain_db": 15,
         "input_source": "mic",
         "number_of_channels": 2,
         "software_input_gain_db1": 0,
         "software_input_gain_db2": 0
     },
     "lastSavedWith": "Audio Front-End Configurator",
-    "lastSavedWithVersion": "1.50.0",
+    "lastSavedWithVersion": "1.60.0",
     "noise_suppression": {
         "ns_db": 20,
         "ns_state": "on"
@@ -46,7 +46,7 @@
         "use_pc_speaker": "no",
         "use_target_speaker": "no"
     },
-    "toolsPackage": "DEEPCRAFT™ Audio Enhancement Tech Pack 1.0.0",
+    "toolsPackage": "DEEPCRAFT™ Audio Enhancement Tech Pack 1.1.0",
     "uart": {
         "baudrate": 115200,
         "data_bits": 8,

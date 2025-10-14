@@ -126,7 +126,7 @@ See the [ModusToolbox&trade; tools package installation guide](https://www.infin
 
 6. Monitor the UART terminal for the detection status; the terminal should print the detection results
 
-7. The LED transitions are only for voice based activation and not for the push-to-talk (PTT) feature 
+7. The LED transitions are only for voice based activation and not for the push-to-talk (PTT) feature and graphics control. The LED transitions are meant for any use-case without any display. 
 
 	For PTT, press the User BTN1 and directly speak the command. Its purpose is to bypass the wakeword.
  
@@ -169,6 +169,7 @@ Document title: *CE242044* – *PSOC&trade; Edge MCU: Mains-powered local voice*
  1.x.0   | New code example <br> Early access release
  2.0.0   | GitHub release
  2.0.1   | Fix asset dependencies to latest tag for github release
+ 2.0.2   | Update to latest BSP, AFE and sync GFX configuration. PDM mic configured to 24bit with SW gain
 <br>
 
 

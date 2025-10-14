@@ -7,8 +7,8 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2025, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
+# (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+# Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ CONFIG=Release
 #########################################################################################
 ##################### Voice Core ########################################################
 
-# Voice Core functionality. Options are
+# Audio Voice Core functionality. Options are
 # LIMITED - Limited time functionality. (Default)
 # FULL    - Full functionality.
 
@@ -83,14 +83,14 @@ CONFIG_INFERENCING_LIB=VOICE_ASSISTANT
 ##########################################################################################
 ############################# Use Case ###################################################
 
-# Option to choose the inferencing library on High Performance core.
+# Option to choose the the use-case
 # MUSIC_PLAYER  - Music Player use-case
 CONFIG_USECASE=MUSIC_PLAYER
 
 ##########################################################################################
 ############################# Graphics ###################################################
 
-# Option to choose the inferencing library on High Performance core.
+# Option for graphics
 # GFX_ENABLE  - Enable Graphics.
 # GFX_DISABLE - Disable Graphics.
 

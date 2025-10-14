@@ -325,11 +325,11 @@
                         <Param id="display_type" value="GFX_DISP_TYPE_DSI_DPI"/>
                         <Param id="display_width" value="832"/>
                         <Param id="format" value="vivD24"/>
-                        <Param id="fps" value="45"/>
+                        <Param id="fps" value="60"/>
                         <Param id="gpu_enabled" value="true"/>
-                        <Param id="hbp" value="23"/>
-                        <Param id="hfp" value="70"/>
-                        <Param id="hsync_width" value="20"/>
+                        <Param id="hbp" value="20"/>
+                        <Param id="hfp" value="210"/>
+                        <Param id="hsync_width" value="10"/>
                         <Param id="layer0_enabled" value="true"/>
                         <Param id="layer0_format" value="vivRGB565"/>
                         <Param id="layer0_height" value="480"/>
@@ -356,13 +356,13 @@
                         <Param id="layer2_zorder" value="0"/>
                         <Param id="lp_mode_cmd_transfer" value="true"/>
                         <Param id="lp_mode_video_transfer" value="true"/>
-                        <Param id="max_per_lane_Mbps" value="520"/>
+                        <Param id="max_per_lane_Mbps" value="850"/>
                         <Param id="mode_flags" value="VID_MODE_TYPE_BURST"/>
                         <Param id="no_of_dsi_lines" value="1"/>
-                        <Param id="use_max_per_lane_Mbps" value="false"/>
-                        <Param id="vbp" value="21"/>
-                        <Param id="vfp" value="7"/>
-                        <Param id="vsync_width" value="2"/>
+                        <Param id="use_max_per_lane_Mbps" value="true"/>
+                        <Param id="vbp" value="20"/>
+                        <Param id="vfp" value="20"/>
+                        <Param id="vsync_width" value="5"/>
                     </Parameters>
                 </Personality>
                 <Personality template="mxi3c" version="1.0" instance="ckbUNHh80qA">
@@ -2382,8 +2382,8 @@
                     <Parameters>
                         <Param id="cicDecimCode_0" value="CY_PDM_PCM_CHAN_CIC_DECIM_8"/>
                         <Param id="cicDecimCode_1" value="CY_PDM_PCM_CHAN_CIC_DECIM_8"/>
-                        <Param id="cicDecimCode_2" value="CY_PDM_PCM_CHAN_CIC_DECIM_32"/>
-                        <Param id="cicDecimCode_3" value="CY_PDM_PCM_CHAN_CIC_DECIM_32"/>
+                        <Param id="cicDecimCode_2" value="CY_PDM_PCM_CHAN_CIC_DECIM_16"/>
+                        <Param id="cicDecimCode_3" value="CY_PDM_PCM_CHAN_CIC_DECIM_16"/>
                         <Param id="cicDecimCode_4" value="CY_PDM_PCM_CHAN_CIC_DECIM_8"/>
                         <Param id="cicDecimCode_5" value="CY_PDM_PCM_CHAN_CIC_DECIM_8"/>
                         <Param id="cicDecimCode_6" value="CY_PDM_PCM_CHAN_CIC_DECIM_8"/>
@@ -2406,42 +2406,42 @@
                         <Param id="dcBlockDisable_5" value="true"/>
                         <Param id="dcBlockDisable_6" value="true"/>
                         <Param id="dcBlockDisable_7" value="true"/>
-                        <Param id="fir0Coeff0data0" value="1"/>
-                        <Param id="fir0Coeff0data1" value="26"/>
-                        <Param id="fir0Coeff1data0" value="57"/>
-                        <Param id="fir0Coeff1data1" value="15"/>
-                        <Param id="fir0Coeff2data0" value="-138"/>
-                        <Param id="fir0Coeff2data1" value="-239"/>
-                        <Param id="fir0Coeff3data0" value="-14"/>
-                        <Param id="fir0Coeff3data1" value="491"/>
-                        <Param id="fir0Coeff4data0" value="665"/>
-                        <Param id="fir0Coeff4data1" value="-110"/>
-                        <Param id="fir0Coeff5data0" value="-1425"/>
-                        <Param id="fir0Coeff5data1" value="-1650"/>
-                        <Param id="fir0Coeff6data0" value="636"/>
-                        <Param id="fir0Coeff6data1" value="4820"/>
+                        <Param id="fir0Coeff0data0" value="5"/>
+                        <Param id="fir0Coeff0data1" value="12"/>
+                        <Param id="fir0Coeff1data0" value="-2"/>
+                        <Param id="fir0Coeff1data1" value="-57"/>
+                        <Param id="fir0Coeff2data0" value="-106"/>
+                        <Param id="fir0Coeff2data1" value="-23"/>
+                        <Param id="fir0Coeff3data0" value="245"/>
+                        <Param id="fir0Coeff3data1" value="466"/>
+                        <Param id="fir0Coeff4data0" value="202"/>
+                        <Param id="fir0Coeff4data1" value="-684"/>
+                        <Param id="fir0Coeff5data0" value="-1509"/>
+                        <Param id="fir0Coeff5data1" value="-1005"/>
+                        <Param id="fir0Coeff6data0" value="1566"/>
+                        <Param id="fir0Coeff6data1" value="5357"/>
                         <Param id="fir0Coeff7data0" value="8191"/>
                         <Param id="fir0Coeff7data1" value="8191"/>
                         <Param id="fir0DecimCode_0" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
                         <Param id="fir0DecimCode_1" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
-                        <Param id="fir0DecimCode_2" value="CY_PDM_PCM_CHAN_FIR0_DECIM_1"/>
-                        <Param id="fir0DecimCode_3" value="CY_PDM_PCM_CHAN_FIR0_DECIM_1"/>
+                        <Param id="fir0DecimCode_2" value="CY_PDM_PCM_CHAN_FIR0_DECIM_3"/>
+                        <Param id="fir0DecimCode_3" value="CY_PDM_PCM_CHAN_FIR0_DECIM_3"/>
                         <Param id="fir0DecimCode_4" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
                         <Param id="fir0DecimCode_5" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
                         <Param id="fir0DecimCode_6" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
                         <Param id="fir0DecimCode_7" value="CY_PDM_PCM_CHAN_FIR0_DECIM_2"/>
                         <Param id="fir0Enable_0" value="true"/>
                         <Param id="fir0Enable_1" value="true"/>
-                        <Param id="fir0Enable_2" value="false"/>
-                        <Param id="fir0Enable_3" value="false"/>
+                        <Param id="fir0Enable_2" value="true"/>
+                        <Param id="fir0Enable_3" value="true"/>
                         <Param id="fir0Enable_4" value="true"/>
                         <Param id="fir0Enable_5" value="true"/>
                         <Param id="fir0Enable_6" value="true"/>
                         <Param id="fir0Enable_7" value="true"/>
                         <Param id="fir0Scale_0" value="7"/>
                         <Param id="fir0Scale_1" value="7"/>
-                        <Param id="fir0Scale_2" value="0"/>
-                        <Param id="fir0Scale_3" value="0"/>
+                        <Param id="fir0Scale_2" value="16"/>
+                        <Param id="fir0Scale_3" value="16"/>
                         <Param id="fir0Scale_4" value="7"/>
                         <Param id="fir0Scale_5" value="7"/>
                         <Param id="fir0Scale_6" value="7"/>
@@ -2476,16 +2476,16 @@
                         <Param id="fir1Coeff9data1" value="-398"/>
                         <Param id="fir1DecimCode_0" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1DecimCode_1" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
-                        <Param id="fir1DecimCode_2" value="CY_PDM_PCM_CHAN_FIR1_DECIM_3"/>
-                        <Param id="fir1DecimCode_3" value="CY_PDM_PCM_CHAN_FIR1_DECIM_3"/>
+                        <Param id="fir1DecimCode_2" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
+                        <Param id="fir1DecimCode_3" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1DecimCode_4" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1DecimCode_5" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1DecimCode_6" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1DecimCode_7" value="CY_PDM_PCM_CHAN_FIR1_DECIM_2"/>
                         <Param id="fir1Scale_0" value="7"/>
                         <Param id="fir1Scale_1" value="7"/>
-                        <Param id="fir1Scale_2" value="10"/>
-                        <Param id="fir1Scale_3" value="10"/>
+                        <Param id="fir1Scale_2" value="4"/>
+                        <Param id="fir1Scale_3" value="4"/>
                         <Param id="fir1Scale_4" value="7"/>
                         <Param id="fir1Scale_5" value="7"/>
                         <Param id="fir1Scale_6" value="7"/>
@@ -2525,19 +2525,19 @@
                         <Param id="signExtension_5" value="true"/>
                         <Param id="signExtension_6" value="true"/>
                         <Param id="signExtension_7" value="true"/>
-                        <Param id="userConfigureFIR0" value="false"/>
-                        <Param id="userConfigureFIR1" value="false"/>
+                        <Param id="userConfigureFIR0" value="true"/>
+                        <Param id="userConfigureFIR1" value="true"/>
                         <Param id="wordSize_0" value="CY_PDM_PCM_WSIZE_16_BIT"/>
                         <Param id="wordSize_1" value="CY_PDM_PCM_WSIZE_16_BIT"/>
-                        <Param id="wordSize_2" value="CY_PDM_PCM_WSIZE_16_BIT"/>
-                        <Param id="wordSize_3" value="CY_PDM_PCM_WSIZE_16_BIT"/>
+                        <Param id="wordSize_2" value="CY_PDM_PCM_WSIZE_24_BIT"/>
+                        <Param id="wordSize_3" value="CY_PDM_PCM_WSIZE_24_BIT"/>
                         <Param id="wordSize_4" value="CY_PDM_PCM_WSIZE_16_BIT"/>
                         <Param id="wordSize_5" value="CY_PDM_PCM_WSIZE_16_BIT"/>
                         <Param id="wordSize_6" value="CY_PDM_PCM_WSIZE_16_BIT"/>
                         <Param id="wordSize_7" value="CY_PDM_PCM_WSIZE_16_BIT"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="E5ESJtxKQgk">
+                <Personality template="pclk_v2" version="1.1" instance="TIUx-iiEVOQ">
                     <Block location="peri[0].group[1].div_8[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_EZ_I2C_TARGET_CLK_DIV"/>
@@ -2548,7 +2548,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="-KJIh42hMXA">
+                <Personality template="pclk_v2" version="1.1" instance="qsFjF5a99Ls">
                     <Block location="peri[0].group[1].div_8[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SPI_CONTROLLER_CLK_DIV"/>
@@ -2559,7 +2559,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="74FALe490Is">
+                <Personality template="pclk_v2" version="1.1" instance="JFGnJo_aCtw">
                     <Block location="peri[0].group[1].div_8[2]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_USB_OS_TIMER_CLK_DIV"/>
@@ -2570,7 +2570,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="72QnHf3r67A">
+                <Personality template="pclk_v2" version="1.1" instance="UR4EyFDcLrQ">
                     <Block location="peri[0].group[1].div_8[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_PWM_DT_CLK_DIV"/>
@@ -2581,7 +2581,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="SnXZ_ZAruzg">
+                <Personality template="pclk_v2" version="1.1" instance="lCXnwoKvGzo">
                     <Block location="peri[0].group[1].div_16[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_I2C_CONTROLLER_CLK_DIV"/>
@@ -2592,7 +2592,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="r7obuVjoVXM">
+                <Personality template="pclk_v2" version="1.1" instance="iOj2nDbTUGQ">
                     <Block location="peri[0].group[1].div_16[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_DEBUG_UART_CLK_DIV"/>
@@ -2603,7 +2603,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="h1jyRfliPco">
+                <Personality template="pclk_v2" version="1.1" instance="bK8jm-93Nps">
                     <Block location="peri[0].group[1].div_16[2]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_GENERAL_PURPOSE_TIMER_CLK_DIV"/>
@@ -2614,7 +2614,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="38UMBOxuje4">
+                <Personality template="pclk_v2" version="1.1" instance="b6dGLmt3UIc">
                     <Block location="peri[0].group[1].div_16[3]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_PWM_LED_CTRL_CLK_DIV"/>
@@ -2625,7 +2625,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="WOOQVPnOl_Y">
+                <Personality template="pclk_v2" version="1.1" instance="pIYFxfZdyo8">
                     <Block location="peri[0].group[1].div_16_5[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_BT_UART_CLK_DIV"/>
@@ -2637,7 +2637,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="vy6xFOXZU08">
+                <Personality template="pclk_v2" version="1.1" instance="kwToxoynHNM">
                     <Block location="peri[0].group[1].div_16_5[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SMARTIO_PWM_CLK_DIV"/>
@@ -2649,7 +2649,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="5zaI3-vQKc0">
+                <Personality template="pclk_v2" version="1.1" instance="w7xsN7a5ud8">
                     <Block location="peri[0].group[1].div_24_5[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SMART_IO_CLK_DIV"/>
@@ -2661,7 +2661,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="ZAMc4kFrGAg">
+                <Personality template="pclk_v2" version="1.1" instance="fq8LylVXn5o">
                     <Block location="peri[0].group[7].div_16_5[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_TRACE_CLK_DIV"/>
@@ -2673,7 +2673,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="1uBmbxjOkWE">
+                <Personality template="pclk_v2" version="1.1" instance="wof-0Iv5pkE">
                     <Block location="peri[0].group[9].div_8[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_I3C_CONTROLLER_CLK_DIV"/>
@@ -2684,7 +2684,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="mmio" version="1.0" instance="fZVxHvxlSOk">
+                <Personality template="mmio" version="1.1" instance="AQkCE7NxPqQ">
                     <Block location="peri[0].mmio[0]" locked="true"/>
                     <Parameters>
                         <Param id="divider2" value="2"/>
@@ -2696,7 +2696,7 @@
                         <Param id="dividerEnabled5" value="false"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="XwpX8Wr_koo">
+                <Personality template="pclk_v2" version="1.1" instance="nxaIs5ETW-U">
                     <Block location="peri[1].group[1].div_16_5[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_TDM_CONTROLLER_0_CLK_DIV"/>
@@ -2708,7 +2708,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="1Pj3A_gzNQ4">
+                <Personality template="pclk_v2" version="1.1" instance="EVb9v2s4V_M">
                     <Block location="peri[1].group[1].div_16_5[1]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_PDM_CLK_DIV"/>
@@ -2720,7 +2720,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="d9AiDHtoEjA">
+                <Personality template="pclk_v2" version="1.1" instance="QztKQzSPpR8">
                     <Block location="peri[1].group[2].div_8[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SDHC_0_CLK_DIV"/>
@@ -2731,7 +2731,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="pclk_v2" version="1.0" instance="n5v5kTyDdg0">
+                <Personality template="pclk_v2" version="1.1" instance="CiizbERQIBQ">
                     <Block location="peri[1].group[3].div_8[0]" locked="true">
                         <Aliases>
                             <Alias value="CYBSP_SDHC_1_CLK_DIV"/>
@@ -2742,7 +2742,7 @@
                         <Param id="startOnReset" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="mmio" version="1.0" instance="UUwTfYwsYSw">
+                <Personality template="mmio" version="1.1" instance="TSPrJaIA3E0">
                     <Block location="peri[1].mmio[0]" locked="true"/>
                     <Parameters>
                         <Param id="divider1" value="2"/>
@@ -3299,7 +3299,7 @@
                         <Param id="inFlash" value="true"/>
                     </Parameters>
                 </Personality>
-                <Personality template="power_v4" version="1.0" instance="lMGDNnoZghg">
+                <Personality template="power_v4" version="1.1" instance="Cpp8Y0B8x1w">
                     <Block location="srss[0].power[0]" locked="true"/>
                     <Parameters>
                         <Param id="actPwrMode" value="POWER_PROFILE_HP"/>
@@ -4224,10 +4224,6 @@
                     <Port name="scb[10].tr_tx_req[0]"/>
                 </Net>
                 <Net>
-                    <Port name="pass[0].clk_hf[0]"/>
-                    <Port name="srss[0].clock[0].hfclk[9].root_clk[0]"/>
-                </Net>
-                <Net>
                     <Port name="pdm[0].clk_if_srss[0]"/>
                     <Port name="peri[1].group[1].div_16_5[1].clk[0]"/>
                 </Net>
@@ -4268,6 +4264,14 @@
                     <Port name="tcpwm[0].group[0].cnt[7].clock_counter_en[0]"/>
                 </Net>
                 <Net>
+                    <Port name="peri[0].group[9].div_8[0].clk_pclk_root[0]"/>
+                    <Port name="srss[0].clock[0].hfclk[13].root_clk[0]"/>
+                </Net>
+                <Net>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[3]"/>
+                    <Port name="srss[0].clock[0].hfclk[11].root_clk[0]"/>
+                </Net>
+                <Net>
                     <Port name="peri[1].group[1].div_16_5[0].clk[0]"/>
                     <Port name="tdm[0].tdm[0].clk_if_srss[0]"/>
                 </Net>
@@ -4276,8 +4280,16 @@
                     <Port name="sdhc[0].clk_hf[0]"/>
                 </Net>
                 <Net>
+                    <Port name="peri[1].group[2].div_8[0].clk_pclk_root[0]"/>
+                    <Port name="srss[0].clock[0].hfclk[5].root_clk[0]"/>
+                </Net>
+                <Net>
                     <Port name="peri[1].group[3].div_8[0].clk[0]"/>
                     <Port name="sdhc[1].clk_hf[0]"/>
+                </Net>
+                <Net>
+                    <Port name="peri[1].group[3].div_8[0].clk_pclk_root[0]"/>
+                    <Port name="srss[0].clock[0].hfclk[6].root_clk[0]"/>
                 </Net>
                 <Net>
                     <Port name="smif[0].core[0].clk_pll_normal[0]"/>
@@ -4292,9 +4304,46 @@
                     <Port name="usbhs[0].clk_phy_pll_ref[0]"/>
                 </Net>
                 <Net>
+                    <Port name="pass[0].clk_hf[0]"/>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[5]"/>
+                    <Port name="srss[0].clock[0].hfclk[9].root_clk[0]"/>
+                </Net>
+                <Net>
+                    <Port name="peri[1].group[1].div_16_5[0].clk_pclk_root[0]"/>
+                    <Port name="peri[1].group[1].div_16_5[1].clk_pclk_root[0]"/>
+                    <Port name="srss[0].clock[0].hfclk[7].root_clk[0]"/>
+                </Net>
+                <Net>
+                    <Port name="peri[0].group[7].div_16_5[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[2]"/>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[4]"/>
+                    <Port name="srss[0].clock[0].hfclk[0].root_clk[0]"/>
+                </Net>
+                <Net>
                     <Port name="gfxss[0].clk_hf[0]"/>
+                    <Port name="peri[1].mmio[0].clk_pclk_root[0]"/>
+                    <Port name="peri[1].mmio[0].clk_pclk_root[1]"/>
+                    <Port name="peri[1].mmio[0].clk_pclk_root[2]"/>
+                    <Port name="peri[1].mmio[0].clk_pclk_root[3]"/>
+                    <Port name="peri[1].mmio[0].clk_pclk_root[4]"/>
                     <Port name="srss[0].clock[0].hfclk[1].root_clk[0]"/>
                     <Port name="usbhs[0].mmio_clk_hf[0]"/>
+                </Net>
+                <Net>
+                    <Port name="peri[0].group[1].div_16[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_16[1].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_16[2].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_16[3].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_16_5[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_16_5[1].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_24_5[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_8[0].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_8[1].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_8[2].clk_pclk_root[0]"/>
+                    <Port name="peri[0].group[1].div_8[3].clk_pclk_root[0]"/>
+                    <Port name="peri[0].mmio[0].clk_pclk_root[1]"/>
+                    <Port name="srss[0].clock[0].hfclk[10].root_clk[0]"/>
                 </Net>
             </Netlist>
         </Device>

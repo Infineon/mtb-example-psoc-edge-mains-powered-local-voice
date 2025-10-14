@@ -3,36 +3,33 @@
 *
 * Description: This file contains music player implementation
 ********************************************************************************
-* Copyright 2025, Cypress Semiconductor Corporation (an Infineon company) or
-* an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
-*
-* This software, including source code, documentation and related
-* materials ("Software") is owned by Cypress Semiconductor Corporation
-* or one of its affiliates ("Cypress") and is protected by and subject to
-* worldwide patent protection (United States and foreign),
-* United States copyright laws and international treaty provisions.
-* Therefore, you may use this Software only as provided in the license
-* agreement accompanying the software package from which you
-* obtained this Software ("EULA").
-* If no EULA applies, Cypress hereby grants you a personal, non-exclusive,
-* non-transferable license to copy, modify, and compile the Software
-* source code solely for use in connection with Cypress's
-* integrated circuit products.  Any reproduction, modification, translation,
-* compilation, or representation of this Software except as specified
-* above is prohibited without the express written permission of Cypress.
-*
-* Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
-* EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress
-* reserves the right to make changes to the Software without notice. Cypress
-* does not assume any liability arising out of the application or use of the
-* Software or any product or circuit described in the Software. Cypress does
-* not authorize its products for use in any products where a malfunction or
-* failure of the Cypress product may reasonably be expected to result in
-* significant property damage, injury or death ("High Risk Product"). By
-* including Cypress's product in a High Risk Product, the manufacturer
-* of such system or application assumes all risk of such use and in doing
-* so agrees to indemnify Cypress against all liability.
+* (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+* Technologies AG. All rights reserved.
+* This software, associated documentation and materials ("Software") is
+* owned by Infineon Technologies AG or one of its affiliates ("Infineon")
+* and is protected by and subject to worldwide patent protection, worldwide
+* copyright laws, and international treaty provisions. Therefore, you may use
+* this Software only as provided in the license agreement accompanying the
+* software package from which you obtained this Software. If no license
+* agreement applies, then any use, reproduction, modification, translation, or
+* compilation of this Software is prohibited without the express written
+* permission of Infineon.
+* 
+* Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
+* IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+* INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
+* THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
+* SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
+* Infineon reserves the right to make changes to the Software without notice.
+* You are responsible for properly designing, programming, and testing the
+* functionality and safety of your intended application of the Software, as
+* well as complying with any legal requirements related to its use. Infineon
+* does not guarantee that the Software will be free from intrusion, data theft
+* or loss, or other breaches ("Security Breaches"), and Infineon shall have
+* no liability arising out of any Security Breaches. Unless otherwise
+* explicitly approved by Infineon, the Software may not be used in any
+* application where a failure of the Product or any consequences of the use
+* thereof can reasonably be expected to result in personal injury.
 *******************************************************************************/
 
 #include "cy_pdl.h"
@@ -167,7 +164,7 @@ static unsigned int flash_music_sizes[] =
 };
 
 /* Holds PCM sample index which will be sent to i2s playback task to play */
-static int32_t flash_music_file_index = 0;
+int32_t flash_music_file_index = 0;
 static int32_t flash_music_relative_file_index = 0;
 
 /* Calculate number of music files */
@@ -388,7 +385,7 @@ static void music_player_task(void* pvParameters)
                     {
                         // notify_music_player_outputs(true);
                         music_player_active = !music_player_active;
-                        if(music_player_pause)
+                        if(is_music_player_paused_for_wwd())
                         {
                             music_player_pause = false;
                             music_player_wwd_pause = false;
@@ -540,7 +537,7 @@ static void music_player_task(void* pvParameters)
                     }
                     else
                     {
-                        if (music_player_wwd_pause)
+                        if (is_music_player_paused_for_wwd())
                         {
                             notify_music_player_outputs(true);
                         }
@@ -575,7 +572,7 @@ static void music_player_task(void* pvParameters)
                     }
                     else
                     {
-                        if (music_player_wwd_pause)
+                        if (is_music_player_paused_for_wwd())
                         {
                             notify_music_player_outputs(true);
                         }
@@ -619,7 +616,7 @@ static void music_player_task(void* pvParameters)
                     }
                     else
                     {
-                        if (music_player_wwd_pause)
+                        if (is_music_player_paused_for_wwd())
                         {
                             notify_music_player_outputs(true);
                         }
@@ -644,15 +641,16 @@ static void music_player_task(void* pvParameters)
                     xQueueReset(i2s_playback_task_q);
                     xQueueReset(aec_ref_data_q);
 
-                    if (is_music_player_active())
+                    if (is_music_player_active() || is_music_player_paused_for_wwd())
                     {
-                        if (!fading_active)
+                        if (!fading_active && !is_music_player_paused_for_wwd())
                         {
                             music_player_restore_volume = music_player_volume;
                         }
                         music_player_pause = true;
                         music_player_wwd_pause = false;
                     }
+
                     tx_q_count = 0;
                     start_fade_out(false);
                     // disable_music_player();
@@ -935,7 +933,7 @@ bool is_music_player_paused(void)
 }
 
 /*******************************************************************************
-* Function Name: is_music_player_paused
+* Function Name: is_music_player_paused_for_wwd
 ********************************************************************************
 * Summary:
 * Returns music player WWD pause state.
@@ -949,7 +947,7 @@ bool is_music_player_paused(void)
 *******************************************************************************/
 bool is_music_player_paused_for_wwd(void)
 {
-    return music_player_wwd_pause;
+    return (music_player_pause && music_player_wwd_pause);
 }
 
 #ifndef ENABLE_MP3_PLAYBACK
@@ -2050,7 +2048,6 @@ static void process_music_player_track_change(int32_t relative_file_index)
     xQueueReset(music_player_task_q);
 
     // notify_music_player_outputs(false);
-    start_fade_out(true);
 
 #ifdef ENABLE_MP3_PLAYBACK
     mp3_decoded_buffer_index = 0;
@@ -2083,6 +2080,8 @@ static void process_music_player_track_change(int32_t relative_file_index)
         process_music_player_relative_file_index(relative_file_index);
         app_log_print(" Playing file '%d'...\n", flash_music_file_index);
     }
+
+    start_fade_out(true);
 
     music_player_q_data.cmd = MUSIC_PLAYER_PRELOAD_DATA;
     music_player_q_data.data_len = 0;

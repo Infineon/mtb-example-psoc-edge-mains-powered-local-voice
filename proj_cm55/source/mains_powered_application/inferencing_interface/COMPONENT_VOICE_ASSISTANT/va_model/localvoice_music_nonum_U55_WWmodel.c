@@ -2,7 +2,7 @@
 * \file localvoice_music_nonum_U55_WWmodel.c
 *****************************************************************************
 * \copyright
-* Copyright 2024, Infineon Technologies.
+* Copyright 2025, Infineon Technologies.
 * All rights reserved.
 *****************************************************************************/
 

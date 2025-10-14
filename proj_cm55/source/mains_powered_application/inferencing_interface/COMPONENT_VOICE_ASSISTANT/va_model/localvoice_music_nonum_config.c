@@ -137,6 +137,7 @@ const char* localvoice_music_nonum_intent_name_list[LOCALVOICE_MUSIC_NONUM_NUM_I
     "vol_level_3",
     "vol_level_4",
     "vol_level_5",
+    "goto_homescreen",
     "raise_volume_level",
     "lower_volume_level",
 };
@@ -221,17 +222,21 @@ const int localvoice_music_nonum_intent_map_array[LOCALVOICE_MUSIC_NONUM_INTENT_
     11, 0, // can you set volume to level four
     12, 0, // set volume to level five
     12, 0, // can you set volume to level five
-    13, 0, // I can't hear you
-    13, 0, // I cannot hear you
-    13, 0, // turn up the volume please
-    14, 0, // Music is too loud
-    14, 0, // turn down the volume please
+    13, 0, // go to homescreen
+    13, 0, // go back to homescreen
+    13, 0, // can you go to homescreen
+    13, 0, // can you go back to homescreen
+    14, 0, // I can't hear you
+    14, 0, // I cannot hear you
+    14, 0, // turn up the volume please
+    15, 0, // Music is too loud
+    15, 0, // turn down the volume please
 };
 
 const int localvoice_music_nonum_intent_map_array_sizes[LOCALVOICE_MUSIC_NONUM_NUM_COMMANDS] = {
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
 };
 
 const int localvoice_music_nonum_variable_phrase_sizes[LOCALVOICE_MUSIC_NONUM_NUM_VARIABLES] = {
@@ -303,12 +308,16 @@ const int localvoice_music_nonum_unit_phrase_map_array[LOCALVOICE_MUSIC_NONUM_UN
     0, // None
     0, // None
     0, // None
+    0, // None
+    0, // None
+    0, // None
+    0, // None
 };
 
 const int localvoice_music_nonum_unit_phrase_map_array_sizes[LOCALVOICE_MUSIC_NONUM_NUM_COMMANDS] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 };
 
 

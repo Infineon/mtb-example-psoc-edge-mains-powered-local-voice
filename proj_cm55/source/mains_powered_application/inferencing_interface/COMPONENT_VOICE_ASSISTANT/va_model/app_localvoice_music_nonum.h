@@ -16,8 +16,9 @@
 #define  LOCALVOICE_MUSIC_NONUM_INTENT_vol_level_3                 0xa
 #define  LOCALVOICE_MUSIC_NONUM_INTENT_vol_level_4                 0xb
 #define  LOCALVOICE_MUSIC_NONUM_INTENT_vol_level_5                 0xc
-#define  LOCALVOICE_MUSIC_NONUM_INTENT_raise_volume_level          0xd
-#define  LOCALVOICE_MUSIC_NONUM_INTENT_lower_volume_level          0xe
+#define  LOCALVOICE_MUSIC_NONUM_INTENT_goto_homescreen             0xd
+#define  LOCALVOICE_MUSIC_NONUM_INTENT_raise_volume_level          0xe
+#define  LOCALVOICE_MUSIC_NONUM_INTENT_lower_volume_level          0xf
 
 
 #define  LOCALVOICE_MUSIC_NONUM_UNIT_degree                      0x0

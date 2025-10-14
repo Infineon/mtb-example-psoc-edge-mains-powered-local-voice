@@ -355,8 +355,24 @@ To profile Voice Assistant for the cycles:
     ```
     #define INFERENCING_PROFILE  (1)
     ```
+
+3. Enable inferencing via a RTOS task so that inferencing MCPS can be checked along with AE MCPS, 
+*proj_cm55\source\mains_powered_application\inferencing_interface\inferencing_task.h*:
+
+    ```
+    #define INFER_TASK_EN           (1)
+    ```
+
+For normal functioning of the code ensure to set #define INFER_TASK_EN to 0. Set to 1 only for profiling. <br>
+
 The MCPS for Voice Assistant is shown below,
 
-**Figure 23. AE – memory and MCPS with AFE components**
+**Figure 23. Voice Assistant MCPS**
 
 ![](../images/va_mcps.png)
+
+The memory requirements for Voice Assistant is shown below,
+
+**Figure 24. Voice Assistant Memory requirements**
+
+![](../images/va_memory.png)

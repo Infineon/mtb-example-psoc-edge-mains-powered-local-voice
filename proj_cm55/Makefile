@@ -7,8 +7,8 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2025, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
+# (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+# Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -257,9 +257,10 @@ DEFINES+=USE_SPEAKER
 DEFINES+=TLV320DAC3100_PROCESSING_BLOCK=0x01
 
 #PDM mic settings - EVK 
-#GAIN_CONTROL_ON - to restrict gain level to -25.0dB to 25.0dB
+#GAIN_CONTROL_ON - to restrict max gain level
 DEFINES +=GAIN_CONTROL_ON
-
+DEFINES +=AFE_MIN_MIC_INPUT_HW_GAIN=-103.0
+DEFINES +=AFE_MAX_MIC_INPUT_HW_GAIN=71.0
 
 ################################################################################
 # Paths

@@ -58,6 +58,10 @@ set volume to level four
 can you set volume to level four
 set volume to level five
 can you set volume to level five
+go to homescreen
+go back to homescreen
+can you go to homescreen
+can you go back to homescreen
 I can't hear you
 I cannot hear you
 turn up the volume please

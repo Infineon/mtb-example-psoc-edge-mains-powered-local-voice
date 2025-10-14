@@ -436,6 +436,39 @@
             ]
         },
         {
+            "name": "goto_homescreen",
+            "nodes": [
+                {
+                    "required": false,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "can you"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "go to",
+                            "go back to"
+                        ]
+                    }
+                },
+                {
+                    "required": true,
+                    "value": {
+                        "type": "text",
+                        "phrases": [
+                            "homescreen"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "name": "raise_volume_level",
             "nodes": [
                 {

@@ -53,6 +53,7 @@
    STDLIB WRAPPER SETTINGS
  *=========================*/
 #include <stdint.h>
+#include "cy_utils.h"
 
 /* Possible values
  * - LV_STDLIB_BUILTIN:     LVGL's built in implementation
@@ -93,7 +94,7 @@
  *====================*/
 
 /*Default display refresh, input device read and animation step period.*/
-#define LV_DEF_REFR_PERIOD  22      /*[ms]*/
+#define LV_DEF_REFR_PERIOD  18      /*[ms]*/
 
 /*Default Dot Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
  *(Not so important, you can adjust it to modify default sizes and spaces)*/
