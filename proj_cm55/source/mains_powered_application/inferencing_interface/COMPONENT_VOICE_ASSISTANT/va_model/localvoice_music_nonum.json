@@ -1,9 +1,14 @@
 {
     "projectName": "localvoice_music_nonum",
     "settings": {
+        "arm_core_id": "U55",
+        "ww_false_fraction": 0.0001,
+        "cmd_reject_fraction": 1,
+        "sod_ww_noactivity_timeout_ms": 500,
+        "ww_cmd_maxwwgap_ms": 1500,
+        "cmd_timeout_adjust_level": 0,
         "dict": "English-US",
         "op_cond_db": 10,
-        "arm_core_id": "U55",
         "nlu_timeout_ms": 0,
         "nlu_sensitivity": 0,
         "wwd_sensitivity": 0,
@@ -430,39 +435,6 @@
                         "type": "text",
                         "phrases": [
                             "set volume to level five"
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "name": "goto_homescreen",
-            "nodes": [
-                {
-                    "required": false,
-                    "value": {
-                        "type": "text",
-                        "phrases": [
-                            "can you"
-                        ]
-                    }
-                },
-                {
-                    "required": true,
-                    "value": {
-                        "type": "text",
-                        "phrases": [
-                            "go to",
-                            "go back to"
-                        ]
-                    }
-                },
-                {
-                    "required": true,
-                    "value": {
-                        "type": "text",
-                        "phrases": [
-                            "homescreen"
                         ]
                     }
                 }

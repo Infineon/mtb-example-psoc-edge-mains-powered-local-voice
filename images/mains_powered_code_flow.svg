@@ -394,7 +394,7 @@
 			<v:textRect cx="43.2285" cy="812.047" width="86.46" height="20"/>
 			<rect x="0" y="802.047" width="86.457" height="20" class="st8"/>
 			<text x="9.49" y="815.65" class="st9" v:langID="16393"><v:paragraph v:horizAlign="1"/><v:tabList/>AE processing</text>		</g>
-		<g id="shape73-156" v:mID="73" v:groupContext="shape" v:layerMember="0" transform="translate(422.362,-237.402)">
+		<g id="shape73-156" v:mID="73" v:groupContext="shape" v:layerMember="0" transform="translate(423.071,-237.402)">
 			<title>Message.73</title>
 			<v:userDefs>
 				<v:ud v:nameU="IsReturn" v:prompt="" v:val="VT0(0):5"/>
@@ -402,7 +402,7 @@
 				<v:ud v:nameU="IsSelfMessage" v:prompt="" v:val="VT0(0):5"/>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 			</v:userDefs>
-			<path d="M0 814.96 L93.57 814.96" class="st5"/>
+			<path d="M0 814.96 L92.86 814.96" class="st5"/>
 		</g>
 		<g id="shape74-161" v:mID="74" v:groupContext="shape" transform="translate(425.197,-255.118)">
 			<title>Sheet.74</title>
@@ -531,37 +531,37 @@
 			</v:userDefs>
 			<path d="M0 814.96 L204.12 814.96" class="st5"/>
 		</g>
-		<g id="group95-224" transform="translate(382.677,-694.488)" v:mID="95" v:groupContext="group">
+		<g id="group95-224" transform="translate(368.504,-694.488)" v:mID="95" v:groupContext="group">
 			<v:userDefs>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 				<v:ud v:nameU="ShowActor" v:prompt="" v:val="VT0(0):5"/>
 				<v:ud v:nameU="ShowDestruction" v:prompt="" v:val="VT0(0):5"/>
 			</v:userDefs>
 			<title>Object lifeline.95</title>
-			<desc>Inferencing Task</desc>
-			<g id="shape96-225" v:mID="96" v:groupContext="shape" transform="translate(9.92126,0)">
+			<desc>Inferencing library (AE context)</desc>
+			<g id="shape96-225" v:mID="96" v:groupContext="shape" transform="translate(24.8033,0)">
 				<title>Sheet.96</title>
 				<rect x="0" y="796.535" width="51.0236" height="25.5118" class="st1"/>
 			</g>
-			<g id="shape97-227" v:mID="97" v:groupContext="shape" transform="translate(26.9291,-29.0551)">
+			<g id="shape97-227" v:mID="97" v:groupContext="shape" transform="translate(41.8112,-29.0551)">
 				<title>Sheet.97</title>
 				<path d="M8.5 822.05 a0 0 0 1 1 0 0 a0 0 0 1 1 0 0 Z" class="st1"/>
 			</g>
-			<g id="shape98-229" v:mID="98" v:groupContext="shape" transform="translate(23.622,655.411)">
+			<g id="shape98-229" v:mID="98" v:groupContext="shape" transform="translate(33.5434,655.411)">
 				<title>Sheet.98</title>
 			</g>
-			<g id="shape99-231" v:mID="99" v:groupContext="shape" transform="translate(857.48,822.047) rotate(90)">
+			<g id="shape99-231" v:mID="99" v:groupContext="shape" transform="translate(872.362,822.047) rotate(90)">
 				<title>Sheet.99</title>
 				<path d="M0 822.05 L637.8 822.05" class="st2"/>
 			</g>
 			<g id="shape95-234" v:mID="95" v:groupContext="groupContent">
 				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-				<v:textRect cx="35.4331" cy="809.291" width="70.87" height="25.5118"/>
-				<rect x="0" y="796.535" width="70.8661" height="25.5118" class="st1"/>
-				<text x="7.27" y="805.69" class="st3" v:langID="16393"><v:paragraph v:horizAlign="1"/><v:tabList/>Inferencing <tspan
-							x="24.23" dy="1.2em" class="st4">Task</tspan></text>			</g>
+				<v:textRect cx="50.3151" cy="809.291" width="100.64" height="25.5118"/>
+				<rect x="0" y="796.535" width="100.63" height="25.5118" class="st1"/>
+				<text x="4.56" y="805.69" class="st3" v:langID="16393"><v:paragraph v:horizAlign="1"/><v:tabList/>Inferencing library <tspan
+							x="19.76" dy="1.2em" class="st4">(AE context)</tspan></text>			</g>
 		</g>
-		<g id="shape100-238" v:mID="100" v:groupContext="shape" v:layerMember="0" transform="translate(305.433,-525.402)">
+		<g id="shape100-238" v:mID="100" v:groupContext="shape" v:layerMember="0" transform="translate(305.433,-539.575)">
 			<title>Message.100</title>
 			<v:userDefs>
 				<v:ud v:nameU="IsReturn" v:prompt="" v:val="VT0(0):5"/>
@@ -569,16 +569,16 @@
 				<v:ud v:nameU="IsSelfMessage" v:prompt="" v:val="VT0(0):5"/>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 			</v:userDefs>
-			<path d="M0 814.96 L104.2 814.96" class="st5"/>
+			<path d="M0 829.13 L104.91 829.13" class="st5"/>
 		</g>
-		<g id="shape101-243" v:mID="101" v:groupContext="shape" transform="translate(-399.685,343.559) rotate(-90)">
+		<g id="shape101-243" v:mID="101" v:groupContext="shape" transform="translate(-398.976,343.559) rotate(-90)">
 			<title>Activation.101</title>
 			<v:userDefs>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 			</v:userDefs>
 			<rect x="0" y="813.543" width="54" height="8.50394" class="st7"/>
 		</g>
-		<g id="shape102-245" v:mID="102" v:groupContext="shape" transform="translate(-399.685,577.559) rotate(-90)">
+		<g id="shape102-245" v:mID="102" v:groupContext="shape" transform="translate(-398.976,577.559) rotate(-90)">
 			<title>Activation.102</title>
 			<v:userDefs>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
@@ -593,7 +593,7 @@
 			<rect x="0" y="802.047" width="86.457" height="20" class="st8"/>
 			<text x="10.71" y="808.45" class="st9" v:langID="16393"><v:paragraph v:horizAlign="1"/><v:tabList/>AE processed <tspan
 						x="32.32" dy="1.2em" class="st4">data</tspan></text>		</g>
-		<g id="shape180-251" v:mID="180" v:groupContext="shape" v:layerMember="0" transform="translate(422.362,-471.402)">
+		<g id="shape180-251" v:mID="180" v:groupContext="shape" v:layerMember="0" transform="translate(423.071,-471.402)">
 			<title>Message.180</title>
 			<v:userDefs>
 				<v:ud v:nameU="IsReturn" v:prompt="" v:val="VT0(0):5"/>
@@ -601,7 +601,7 @@
 				<v:ud v:nameU="IsSelfMessage" v:prompt="" v:val="VT0(0):5"/>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 			</v:userDefs>
-			<path d="M0 814.96 L93.57 814.96" class="st5"/>
+			<path d="M0 814.96 L92.86 814.96" class="st5"/>
 		</g>
 		<g id="shape181-256" v:mID="181" v:groupContext="shape" transform="translate(430.866,-500.236)">
 			<title>Sheet.181</title>
@@ -619,7 +619,7 @@
 			<rect x="0" y="802.047" width="86.457" height="20" class="st8"/>
 			<text x="16.61" y="808.45" class="st9" v:langID="16393"><v:paragraph v:horizAlign="1"/><v:tabList/>Wakeword <tspan
 						x="15.2" dy="1.2em" class="st4">notification</tspan></text>		</g>
-		<g id="shape262-264" v:mID="262" v:groupContext="shape" v:layerMember="0" transform="translate(305.433,-309.402)">
+		<g id="shape262-264" v:mID="262" v:groupContext="shape" v:layerMember="0" transform="translate(305.433,-323.575)">
 			<title>Message.262</title>
 			<v:userDefs>
 				<v:ud v:nameU="IsReturn" v:prompt="" v:val="VT0(0):5"/>
@@ -627,7 +627,7 @@
 				<v:ud v:nameU="IsSelfMessage" v:prompt="" v:val="VT0(0):5"/>
 				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
 			</v:userDefs>
-			<path d="M0 814.96 L104.2 814.96" class="st5"/>
+			<path d="M0 829.13 L104.91 829.13" class="st5"/>
 		</g>
 		<g id="shape264-269" v:mID="264" v:groupContext="shape" transform="translate(311.811,-504.409)">
 			<title>Sheet.264</title>

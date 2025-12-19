@@ -3,33 +3,33 @@
 *
 * Description: This file contains music player implementation
 ********************************************************************************
-* (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
-* Technologies AG. All rights reserved.
-* This software, associated documentation and materials ("Software") is
-* owned by Infineon Technologies AG or one of its affiliates ("Infineon")
-* and is protected by and subject to worldwide patent protection, worldwide
-* copyright laws, and international treaty provisions. Therefore, you may use
-* this Software only as provided in the license agreement accompanying the
-* software package from which you obtained this Software. If no license
-* agreement applies, then any use, reproduction, modification, translation, or
-* compilation of this Software is prohibited without the express written
-* permission of Infineon.
-* 
-* Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
-* IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
-* THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
-* SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
-* Infineon reserves the right to make changes to the Software without notice.
-* You are responsible for properly designing, programming, and testing the
-* functionality and safety of your intended application of the Software, as
-* well as complying with any legal requirements related to its use. Infineon
-* does not guarantee that the Software will be free from intrusion, data theft
-* or loss, or other breaches ("Security Breaches"), and Infineon shall have
-* no liability arising out of any Security Breaches. Unless otherwise
-* explicitly approved by Infineon, the Software may not be used in any
-* application where a failure of the Product or any consequences of the use
-* thereof can reasonably be expected to result in personal injury.
+ * (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+ * Technologies AG. All rights reserved.
+ * This software, associated documentation and materials ("Software") is
+ * owned by Infineon Technologies AG or one of its affiliates ("Infineon")
+ * and is protected by and subject to worldwide patent protection, worldwide
+ * copyright laws, and international treaty provisions. Therefore, you may use
+ * this Software only as provided in the license agreement accompanying the
+ * software package from which you obtained this Software. If no license
+ * agreement applies, then any use, reproduction, modification, translation, or
+ * compilation of this Software is prohibited without the express written
+ * permission of Infineon.
+ *
+ * Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
+ * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
+ * THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
+ * SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
+ * Infineon reserves the right to make changes to the Software without notice.
+ * You are responsible for properly designing, programming, and testing the
+ * functionality and safety of your intended application of the Software, as
+ * well as complying with any legal requirements related to its use. Infineon
+ * does not guarantee that the Software will be free from intrusion, data theft
+ * or loss, or other breaches ("Security Breaches"), and Infineon shall have
+ * no liability arising out of any Security Breaches. Unless otherwise
+ * explicitly approved by Infineon, the Software may not be used in any
+ * application where a failure of the Product or any consequences of the use
+ * thereof can reasonably be expected to result in personal injury.
 *******************************************************************************/
 
 #include "cy_pdl.h"
@@ -49,23 +49,30 @@
 
 #include "IFX_asrc.h"
 #include "app_i2s.h"
-
+#if LPF_ENABLE
+#include "app_lpf.h"
+#endif /* LPF_ENABLE */
+#if HPF_ENABLE
+#include "app_hpf.h"
+#endif /* HPF_ENABLE*/
+#include "audio_conv_utils.h"
+#include "audio_usb_send_utils.h"
 
 #ifdef ENABLE_MP3_PLAYBACK
-    #include "cy_audio_sw_codecs.h"
-    #include "cy_audio_sw_codec_utils.h"
-    #include "cy_audio_sw_mp3_decoder.h"
-    #include "mp3_seek.h"
+#include "cy_audio_sw_codecs.h"
+#include "cy_audio_sw_codec_utils.h"
+#include "cy_audio_sw_mp3_decoder.h"
+#include "mp3_seek.h"
 
-    #include "borrtex_the_city_of_hope.mp3.h"
-    #include "campagna_right_side_of_the_bed.mp3.h"
-    #include "solar_body_about_the_memories.mp3.h"
-    #include "wonderland_star_night.mp3.h"
-    #include "wonderland_work.mp3.h"
+#include "borrtex_the_city_of_hope.mp3.h"
+#include "campagna_right_side_of_the_bed.mp3.h"
+#include "solar_body_about_the_memories.mp3.h"
+#include "wonderland_star_night.mp3.h"
+#include "wonderland_work.mp3.h"
 #else
-    #include "borrtex_the_city_of_hope.wav.h"
-    #include "campagna_right_side_of_the_bed.wav.h"
-    #include "wonderland_star_night.wav.h"
+#include "borrtex_the_city_of_hope.wav.h"
+#include "campagna_right_side_of_the_bed.wav.h"
+#include "wonderland_star_night.wav.h"
 #endif /* ENABLE_MP3_PLAYBACK */
 
 /******************************************************************************
@@ -94,17 +101,22 @@
 #define FADE_OUT_TO_FADE_IN_DELAY_MS        (50u)
 
 #ifdef ENABLE_MP3_PLAYBACK
-    /* Buffer size and limits for the PCM data decoded from MP3. */
-    #define MP3_DECODED_BUFFER_SIZE         (480 * sizeof(int16_t) * 30 * 2)
-    #define MP3_DECODED_BUFFER_SIZE_LIMIT   (MP3_DECODED_BUFFER_SIZE - (2 * 480 * sizeof(int16_t)))
+/* Buffer size and limits for the PCM data decoded from MP3. */
+#define MP3_DECODED_BUFFER_SIZE         (480 * sizeof(int16_t) * 30 * 2)
+#define MP3_DECODED_BUFFER_SIZE_LIMIT   (MP3_DECODED_BUFFER_SIZE - (2 * 480 * sizeof(int16_t)))
 
-    /* Number of frames to be decoded at once */
-    #define MP3_DECODER_FRAME_COUNT         (1u)
+/* Number of frames to be decoded at once */
+#define MP3_DECODER_FRAME_COUNT         (1u)
 
-    /* Frames to be skipped during first decoding post seeking */
-    #define MP3_SEEK_SKIP_FRAMES_COUNT      (75u)
+/* Frames to be skipped during first decoding post seeking */
+#define MP3_SEEK_SKIP_FRAMES_COUNT      (75u)
 
 #endif /* ENABLE_MP3_PLAYBACK */
+
+#if LPF_ENABLE
+#define MONO_AEC_REFERENCE_SIZE             (320)
+#endif /* LPF_ENABLE */
+#define FRAME_SIZE_48K                      (960)
 
 /*******************************************************************************
 * Global Variables
@@ -209,29 +221,43 @@ static bool fade_out_triggers_fade_in = false;
 static bool fading_active = false;
 
 #ifdef ENABLE_MP3_PLAYBACK
-    /* Static buffer for decoded PCM data */
-    static uint8_t mp3_decoded_buffer[MP3_DECODED_BUFFER_SIZE] __attribute__ ((section(".cy_socmem_data")));
+/* Static buffer for decoded PCM data */
+static uint8_t mp3_decoded_buffer[MP3_DECODED_BUFFER_SIZE] __attribute__ ((section(".cy_socmem_data")));
 
-    static cy_audio_sw_codec_handle_t mp3_decoder_handle;
-    static cy_audio_sw_codec_stream_info_t mp3_stream_info;
-    static cy_audio_sw_codec_decode_config_t mp3_decoder_config =
-    {
-        .codec_type = CY_AUDIO_CODEC_TYPE_MP3,
-        .sampling_rate = CY_AUDIO_CODEC_SAMPLING_RATE_UNKNOWN,
-        .channel = CY_AUDIO_CODEC_CHANNEL_UNKNOWN,
-        .bitwidth = CY_AUDIO_CODEC_BITWIDTH_UNKNOWN,
-        .callback_user_arg = NULL,
-        .stream_info = NULL,
-    };
+static cy_audio_sw_codec_handle_t mp3_decoder_handle;
+static cy_audio_sw_codec_stream_info_t mp3_stream_info;
+static cy_audio_sw_codec_decode_config_t mp3_decoder_config =
+{
+    .codec_type = CY_AUDIO_CODEC_TYPE_MP3,
+    .sampling_rate = CY_AUDIO_CODEC_SAMPLING_RATE_UNKNOWN,
+    .channel = CY_AUDIO_CODEC_CHANNEL_UNKNOWN,
+    .bitwidth = CY_AUDIO_CODEC_BITWIDTH_UNKNOWN,
+    .callback_user_arg = NULL,
+    .stream_info = NULL,
+};
 
-    static uint32_t mp3_recommended_out_size;
-    static uint32_t mp3_decoded_buffer_index = 0;
-    static uint32_t mp3_decoded_buffer_size = 0;
-    static uint32_t prev_i2s_buffer_index = 0;
-    static int32_t mp3_decoded_data_in_buffer = 0;
-    static uint32_t curr_mp3_file_total_samples = 0;
-    static uint32_t skip_frames = 0;
+static uint32_t mp3_recommended_out_size;
+static uint32_t mp3_decoded_buffer_index = 0;
+static uint32_t mp3_decoded_buffer_size = 0;
+static uint32_t prev_i2s_buffer_index = 0;
+static int32_t mp3_decoded_data_in_buffer = 0;
+static uint32_t curr_mp3_file_total_samples = 0;
+static uint32_t skip_frames = 0;
 #endif /* ENABLE_MP3_PLAYBACK */
+
+#if LPF_ENABLE
+
+extern void *lpf_obj_44_1k;
+extern void *lpf_obj_48k;
+
+extern int16_t *lpf_buffer_44_1k;
+extern int16_t *lpf_buffer_48k;
+#endif /* LPF_ENABLE */
+
+#if HPF_ENABLE
+extern void *hpf_obj;
+extern int16_t *hpf_output_buffer;
+#endif /* HPF_ENABLE */
 
 /*******************************************************************************
 * Function Prototypes
@@ -346,6 +372,15 @@ static void music_player_task(void* pvParameters)
     i2s_playback_sampling_rate_hz = output_sampling_freq;
 
     i2s_init(i2s_playback_sampling_rate_hz);
+#if LPF_ENABLE  
+    /*LPF initialization*/
+    lpf_init_44_1k();
+    lpf_init_48k();
+#endif /* LPF_ENABLE */
+
+#if HPF_ENABLE
+    hpf_init(HPF_48K_RATE);
+#endif /* HPF_ENABLE */
 
     for (;;)
     {
@@ -1797,6 +1832,16 @@ static void read_and_send_music_player_data(uint32_t tx_frame_count)
     uint32_t expected_aec_ref_data_len = 0;
     uint32_t input_len = 0;
     bool switch_to_next_file = false;
+
+#if LPF_ENABLE    
+    uint16_t mono_aec_ref[FRAME_SIZE_48K] = {0};
+    uint32_t aec_lpf_len = 0;
+#endif /* LPF_ENABLE */
+#if HPF_ENABLE
+    uint16_t mono_hpf[FRAME_SIZE_48K] = {0};
+    uint16_t stereo_hpf[FRAME_SIZE_48K*2] = {0};
+#endif /* HPF_ENABLE*/
+    
 #ifdef ENABLE_MP3_PLAYBACK
     music_player_q_data_t music_player_q_data;
 #endif /* ENABLE_MP3_PLAYBACK */
@@ -1863,17 +1908,16 @@ static void read_and_send_music_player_data(uint32_t tx_frame_count)
             packet_read_len = read_len;
 #endif /* ENABLE_MP3_PLAYBACK */
 
-            if (expected_tx_data_len != tx_data_len)
+            /* Take from the buffer pool so that tx_data_ptr is writable*/
+            temp_data_ptr = get_pcm_buffer_ptr(expected_tx_data_len);
+            /*allocate_new_buffer = false;*/
+            memcpy(temp_data_ptr, tx_data_ptr, read_len);
+            if (expected_tx_data_len > read_len)
             {
-                temp_data_ptr = get_pcm_buffer_ptr(expected_tx_data_len);
-                /*allocate_new_buffer = false;*/
-                memcpy(temp_data_ptr, tx_data_ptr, read_len);
-                if (expected_tx_data_len > read_len)
-                {
-                    memset(temp_data_ptr + read_len, 0, expected_tx_data_len - read_len);
-                }
-                tx_data_ptr = temp_data_ptr;
+                memset(temp_data_ptr + read_len, 0, expected_tx_data_len - read_len);
             }
+            tx_data_ptr = temp_data_ptr;
+         
         }
 
         /* ASRC for AEC Reference Data */
@@ -1883,10 +1927,60 @@ static void read_and_send_music_player_data(uint32_t tx_frame_count)
             {
                 expected_aec_ref_data_len = ASRC_EXPECTED_OUTPUT_SIZE(tx_data_len / music_player_num_channels,
                                                         music_player_sampling_rate, AEC_REF_SAMPLE_RATE_HZ);
+                  
+                
                 temp_data_ptr = get_aec_ref_buffer_ptr(expected_aec_ref_data_len);
+#if LPF_ENABLE                
+                if (music_player_num_channels == 1)
+                {
+                    
+                    aec_lpf_len=tx_data_len;
+
+                    if (music_player_sampling_rate==SAMPLING_RATE_44_1KHZ)
+                    {
+                        lpf_process(lpf_obj_44_1k, (int16_t*)tx_data_ptr, lpf_buffer_44_1k);
+                    }
+                    if (music_player_sampling_rate==SAMPLING_RATE_48KHZ)
+                    {
+                        lpf_process(lpf_obj_48k, (int16_t*)tx_data_ptr, lpf_buffer_48k);
+                    }
+                    
+                } 
+                else if (music_player_num_channels == 2)
+                {
+                    aec_lpf_len=tx_data_len/2;
+                    convert_stereo_interleaved_to_mono((uint16_t*)tx_data_ptr,(uint16_t*)mono_aec_ref, music_player_sampling_rate/100);
+                    
+                    if (music_player_sampling_rate==SAMPLING_RATE_44_1KHZ)
+                    {
+                        lpf_process(lpf_obj_44_1k, (int16_t*)mono_aec_ref,lpf_buffer_44_1k);
+                    }
+                    if (music_player_sampling_rate==SAMPLING_RATE_48KHZ)
+                    {
+                        lpf_process(lpf_obj_48k,(int16_t*)mono_aec_ref,lpf_buffer_48k);
+                    }
+                   
+                }
+                                
+                if (music_player_sampling_rate==SAMPLING_RATE_44_1KHZ)
+                {
+                    aec_ref_data_len = perform_asrc((int16_t *)lpf_buffer_44_1k, (aec_lpf_len / sizeof(int16_t)),
+                                false,
+                                (int16_t *)temp_data_ptr, false, &aec_ref_asrc_obj);
+                }
+                if (music_player_sampling_rate==SAMPLING_RATE_48KHZ)
+                {
+                    aec_ref_data_len = perform_asrc((int16_t *)lpf_buffer_48k, (aec_lpf_len / sizeof(int16_t)),
+                                false,
+                                (int16_t *)temp_data_ptr, false, &aec_ref_asrc_obj);
+                }
+
+#else                            
+                                              
                 aec_ref_data_len = perform_asrc((int16_t *)tx_data_ptr, (tx_data_len / sizeof(int16_t)),
                                                 (CHANNELS_STEREO == music_player_num_channels),
-                                                (int16_t *)temp_data_ptr, false, &aec_ref_asrc_obj);
+                                                (int16_t *)temp_data_ptr, false, &aec_ref_asrc_obj); 
+#endif /* LPF_ENABLE */                                                
                 i2s_playback_q_data.aec_ref_ptr = (int16_t*) temp_data_ptr;
 
                 aec_ref_data_len *= sizeof(int16_t);
@@ -1933,6 +2027,24 @@ static void read_and_send_music_player_data(uint32_t tx_frame_count)
 
         if (MUSIC_PLAYER_OUTPUT_I2S == music_player_audio_output)
         {
+
+#if HPF_ENABLE     
+#ifdef ENABLE_MP3_PLAYBACK
+            /* Apply HPF for all mp3 files */
+            memcpy(stereo_hpf,tx_data_ptr,tx_data_len);
+            convert_stereo_interleaved_to_mono((uint16_t*)stereo_hpf,(uint16_t*)mono_hpf, HPF_48K_RATE/100);
+            hpf_process((int16_t *)mono_hpf, hpf_output_buffer);
+            convert_mono_to_stereo_interleaved((uint16_t*)tx_data_ptr,(uint16_t*)hpf_output_buffer,HPF_48K_RATE/100);
+#else
+            if (flash_music_file_index!=0) /* Skip HPF for 16kHz wav file */
+            {
+                memcpy(stereo_hpf,tx_data_ptr,tx_data_len);
+                convert_stereo_interleaved_to_mono((uint16_t*)stereo_hpf,(uint16_t*)mono_hpf, HPF_48K_RATE/100);
+                hpf_process((int16_t *)mono_hpf, hpf_output_buffer);
+                convert_mono_to_stereo_interleaved((uint16_t*)tx_data_ptr,(uint16_t*)hpf_output_buffer,HPF_48K_RATE/100);  
+            }
+#endif /* ENABLE_MP3_PLAYBACK */
+#endif /* HPF_ENABLE */        
             i2s_playback_q_data.data = (int16_t*) tx_data_ptr;
             i2s_playback_q_data.data_len = tx_data_len;
 

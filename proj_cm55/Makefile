@@ -126,9 +126,15 @@ POSTBUILD+=
 ################################################################################
 # Application specific Configurations to use COMPONENTS, DEFINES and flags.
 ################################################################################
+# Automatic Gain Control
+# AGC_ON    - Enables AGC on Audio Enhancement processed data.
+# AGC_OFF   - Disables AGC on Audio Enhancement processed data. (Default value)
+CONFIG_AGC_MODE=AGC_OFF
+ifeq ($(CONFIG_AGC_MODE),AGC_ON)
+    DEFINES += ENABLE_IFX_AGC
+endif
+
 DEFINES += CY_RETARGET_IO_CONVERT_LF_TO_CRLF 
-
-
 
 ifeq ($(CONFIG_USECASE),MUSIC_PLAYER)
 
@@ -150,6 +156,8 @@ ifeq ($(CONFIG_USECASE),MUSIC_PLAYER)
         DEFINES+=SUPPORT_MP3_PARSING ENABLE_MP3_DECODE
         DEFINES+=ENABLE_MP3_PLAYBACK
     endif    
+    DEFINES += ENABLE_IFX_PRE_PROCESS_ASRC_LPF 
+    DEFINES += ENABLE_IFX_PRE_PROCESS_HPF
     
 endif
 
@@ -294,6 +302,7 @@ CY_COMPILER_PATH?=
 CY_AVC_PATH=$(SEARCH_audio-voice-core)
 CY_AFE_PATH=$(SEARCH_audio-front-end)
 CY_SOD_PATH=$(SEARCH_speech-onset-detection)
+CY_VA_PATH=$(SEARCH_voice-assistant)
 
 # Ignore unused LVGL middleware files from compilation
 

@@ -239,7 +239,7 @@ For training a new cloud project,
 
     ![](../images/va_command.png)
 
-4. Each command flow should me mapped to an intent. Choose the **Intent** option and add the intent label. Ensure to connect all the nodes
+4. Each command flow should be mapped to an intent. Choose the **Intent** option and add the intent label. Ensure to connect all the nodes
   
     **Figure 18. Mapping command flow to intent**
   
@@ -284,6 +284,34 @@ For training a new cloud project,
 
     If the inferencing engine is changed, switch `CONFIG_INFERENCING_LIB=[new lib]` in *common.mk* and add the respective API in *inferencing_interface.c* so the application calls the abstracted API
 
+### Automatic Gain Control (AGC)
+
+This code example also supports Automatic Gain Control (AGC) on Audio Enhancement processed data. After AE processing, the processed data can be sent to AGC algorithm for gain control which is then sent to the inferencing library. By default, this is disabled in the code example.
+To enable AGC, enable CONFIG_AGC_MODE in Makefile of proj_cm55 (proj_cm55/Makefile).
+
+```
+# Automatic Gain Control
+# AGC_ON    - Enables AGC on Audio Enhancement processed data.
+# AGC_OFF   - Disables AGC on Audio Enhancement processed data. (Default value)
+CONFIG_AGC_MODE=AGC_ON
+
+```
+
+### Low Pass Filter (LPF) and High Pass Filter (HPF) for music player use-case
+
+This code example supports Low Pass Filter (LPF) in music player use-case. LPF is used on 44.1kHz and 48kHz music data before converting it to 16kHz AEC reference.
+
+High Pass Filter (HPF) is supported on the actual 48kHz audio playback that will be played on kit speaker.
+
+To enable LPF and HPF, set the following macros in
+*proj_cm55\source\use_case\COMPONENT_MUSICPLAYER\music_player_task.h*
+
+```
+#define LPF_ENABLE                                 (1)
+#define HPF_ENABLE                                 (1)
+
+```
+
 
 ### KPI
 
@@ -327,7 +355,7 @@ To profile the AFE middleware for the cycles:
 1. Enable the following in the *Makefile* of *proj_cm55*:
 
     ```
-    #For Profilier
+    #For Profiler
     COMPONENTS += PROFILER
     DEFINES += PROFILER_ENABLE
     ```

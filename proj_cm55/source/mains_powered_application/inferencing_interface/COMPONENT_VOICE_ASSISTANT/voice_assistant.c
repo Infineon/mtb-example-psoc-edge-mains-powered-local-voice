@@ -4,33 +4,33 @@
 * Description :
 * Code for DEEPCRAFT voice assistant
 ********************************************************************************
-* (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
-* Technologies AG. All rights reserved.
-* This software, associated documentation and materials ("Software") is
-* owned by Infineon Technologies AG or one of its affiliates ("Infineon")
-* and is protected by and subject to worldwide patent protection, worldwide
-* copyright laws, and international treaty provisions. Therefore, you may use
-* this Software only as provided in the license agreement accompanying the
-* software package from which you obtained this Software. If no license
-* agreement applies, then any use, reproduction, modification, translation, or
-* compilation of this Software is prohibited without the express written
-* permission of Infineon.
-* 
-* Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
-* IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
-* THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
-* SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
-* Infineon reserves the right to make changes to the Software without notice.
-* You are responsible for properly designing, programming, and testing the
-* functionality and safety of your intended application of the Software, as
-* well as complying with any legal requirements related to its use. Infineon
-* does not guarantee that the Software will be free from intrusion, data theft
-* or loss, or other breaches ("Security Breaches"), and Infineon shall have
-* no liability arising out of any Security Breaches. Unless otherwise
-* explicitly approved by Infineon, the Software may not be used in any
-* application where a failure of the Product or any consequences of the use
-* thereof can reasonably be expected to result in personal injury.
+ * (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+ * Technologies AG. All rights reserved.
+ * This software, associated documentation and materials ("Software") is
+ * owned by Infineon Technologies AG or one of its affiliates ("Infineon")
+ * and is protected by and subject to worldwide patent protection, worldwide
+ * copyright laws, and international treaty provisions. Therefore, you may use
+ * this Software only as provided in the license agreement accompanying the
+ * software package from which you obtained this Software. If no license
+ * agreement applies, then any use, reproduction, modification, translation, or
+ * compilation of this Software is prohibited without the express written
+ * permission of Infineon.
+ *
+ * Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
+ * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
+ * THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
+ * SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
+ * Infineon reserves the right to make changes to the Software without notice.
+ * You are responsible for properly designing, programming, and testing the
+ * functionality and safety of your intended application of the Software, as
+ * well as complying with any legal requirements related to its use. Infineon
+ * does not guarantee that the Software will be free from intrusion, data theft
+ * or loss, or other breaches ("Security Breaches"), and Infineon shall have
+ * no liability arising out of any Security Breaches. Unless otherwise
+ * explicitly approved by Infineon, the Software may not be used in any
+ * application where a failure of the Product or any consequences of the use
+ * thereof can reasonably be expected to result in personal injury.
 *******************************************************************************/
 
 /*******************************************************************************
@@ -77,12 +77,12 @@ va_rslt_t voice_assistant_init(va_mode_t mode)
         case VA_MODE_WW_SINGLE_CMD:
         case VA_MODE_WW_MULTI_CMD:
             result = mtb_wwd_init(&va_wwd_obj, MTB_WWD_NLU_CONFIG_STRUCT(PROJECT_PREFIX)[0]);
-            if (result != CY_WWD_RSLT_SUCCESS)
+            if (result != MTB_VA_RSLT_SUCCESS)
             {
                 return VA_RSLT_FAIL;
             }
             result = mtb_nlu_init(&va_nlu_obj, MTB_WWD_NLU_CONFIG_STRUCT(PROJECT_PREFIX)[0]);
-            if (result != CY_WWD_RSLT_SUCCESS)
+            if (result != MTB_VA_RSLT_SUCCESS)
             {
                 return VA_RSLT_FAIL;
             }
@@ -91,7 +91,7 @@ va_rslt_t voice_assistant_init(va_mode_t mode)
 
         case VA_MODE_WW_ONLY:
             result = mtb_wwd_init(&va_wwd_obj, MTB_WWD_NLU_CONFIG_STRUCT(PROJECT_PREFIX)[0]);
-            if (result != CY_WWD_RSLT_SUCCESS)
+            if (result != MTB_VA_RSLT_SUCCESS)
             {
                 return VA_RSLT_FAIL;
             }
@@ -100,7 +100,7 @@ va_rslt_t voice_assistant_init(va_mode_t mode)
 
         case VA_MODE_CMD_ONLY:
             result = mtb_nlu_init(&va_nlu_obj, MTB_WWD_NLU_CONFIG_STRUCT(PROJECT_PREFIX)[0]);
-            if (result != CY_NLU_RSLT_SUCCESS)
+            if (result != MTB_VA_RSLT_SUCCESS)
             {
                 return VA_RSLT_FAIL;
             }
@@ -165,11 +165,11 @@ va_rslt_t voice_assistant_process(int16_t *audio_frame, va_event_t *event, va_da
         /* Run the wake-word detection process */
         result = mtb_wwd_process(&va_wwd_obj, audio_frame, &wwd_state);
 
-        if (result == CY_WWD_RSLT_LICENSE_ERROR)
+        if (result == MTB_VA_RSLT_LICENSE_ERROR)
         {
             return VA_RSLT_LICENSE_ERROR;
         } 
-        else if (result != CY_WWD_RSLT_SUCCESS)
+        else if (result != MTB_VA_RSLT_SUCCESS)
         {
             return VA_RSLT_FAIL;
         }
@@ -205,7 +205,7 @@ va_rslt_t voice_assistant_process(int16_t *audio_frame, va_event_t *event, va_da
         /* Run the command detection process */
         result = mtb_nlu_process(&va_nlu_obj, audio_frame, &nlu_state, &va_data->intent_index, variable, &va_data->num_var);
 
-        if (result == CY_NLU_RSLT_LICENSE_ERROR)
+        if (result == MTB_VA_RSLT_LICENSE_ERROR)
         {
             return VA_RSLT_LICENSE_ERROR;
         }
@@ -252,6 +252,33 @@ va_rslt_t voice_assistant_process(int16_t *audio_frame, va_event_t *event, va_da
 }
 
 /*******************************************************************************
+ * Function Name: voice_assistant_set_command_timeout
+ *******************************************************************************
+ * Summary:
+ * Sets the command timeout for NLU detection.
+ *
+ * Parameters:
+ *  timeout_ms: Timeout in milliseconds.
+ *
+ * Return:
+ *  Returns VA_RSLT_SUCCESS if successful, otherwise returns an error code.
+ *
+ *******************************************************************************/
+va_rslt_t voice_assistant_set_command_timeout(uint32_t timeout_ms)
+{
+    cy_rslt_t result;
+
+    result = mtb_nlu_timeout(&va_nlu_obj, timeout_ms);
+
+    if (result != MTB_VA_RSLT_SUCCESS)
+    {
+        return VA_RSLT_FAIL;
+    }
+
+    return VA_RSLT_SUCCESS;
+}
+
+/*******************************************************************************
  * Function Name: voice_assistant_get_command
  *******************************************************************************
  * Summary:
@@ -275,5 +302,10 @@ va_rslt_t voice_assistant_get_command(char *text)
 
     result = mtb_nlu_get_command(&va_nlu_obj, text);
 
-    return result;
+    if (result != MTB_VA_RSLT_SUCCESS)
+    {
+        return VA_RSLT_FAIL;
+    }
+
+    return VA_RSLT_SUCCESS;
 }

@@ -4,33 +4,33 @@
 * Description :
 * Wrapper for Audio Enhancement
 ********************************************************************************
-* (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
-* Technologies AG. All rights reserved.
-* This software, associated documentation and materials ("Software") is
-* owned by Infineon Technologies AG or one of its affiliates ("Infineon")
-* and is protected by and subject to worldwide patent protection, worldwide
-* copyright laws, and international treaty provisions. Therefore, you may use
-* this Software only as provided in the license agreement accompanying the
-* software package from which you obtained this Software. If no license
-* agreement applies, then any use, reproduction, modification, translation, or
-* compilation of this Software is prohibited without the express written
-* permission of Infineon.
-* 
-* Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
-* IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
-* THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
-* SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
-* Infineon reserves the right to make changes to the Software without notice.
-* You are responsible for properly designing, programming, and testing the
-* functionality and safety of your intended application of the Software, as
-* well as complying with any legal requirements related to its use. Infineon
-* does not guarantee that the Software will be free from intrusion, data theft
-* or loss, or other breaches ("Security Breaches"), and Infineon shall have
-* no liability arising out of any Security Breaches. Unless otherwise
-* explicitly approved by Infineon, the Software may not be used in any
-* application where a failure of the Product or any consequences of the use
-* thereof can reasonably be expected to result in personal injury.
+ * (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+ * Technologies AG. All rights reserved.
+ * This software, associated documentation and materials ("Software") is
+ * owned by Infineon Technologies AG or one of its affiliates ("Infineon")
+ * and is protected by and subject to worldwide patent protection, worldwide
+ * copyright laws, and international treaty provisions. Therefore, you may use
+ * this Software only as provided in the license agreement accompanying the
+ * software package from which you obtained this Software. If no license
+ * agreement applies, then any use, reproduction, modification, translation, or
+ * compilation of this Software is prohibited without the express written
+ * permission of Infineon.
+ *
+ * Disclaimer: UNLESS OTHERWISE EXPRESSLY AGREED WITH INFINEON, THIS SOFTWARE
+ * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING, BUT NOT LIMITED TO, ALL WARRANTIES OF NON-INFRINGEMENT OF
+ * THIRD-PARTY RIGHTS AND IMPLIED WARRANTIES SUCH AS WARRANTIES OF FITNESS FOR A
+ * SPECIFIC USE/PURPOSE OR MERCHANTABILITY.
+ * Infineon reserves the right to make changes to the Software without notice.
+ * You are responsible for properly designing, programming, and testing the
+ * functionality and safety of your intended application of the Software, as
+ * well as complying with any legal requirements related to its use. Infineon
+ * does not guarantee that the Software will be free from intrusion, data theft
+ * or loss, or other breaches ("Security Breaches"), and Infineon shall have
+ * no liability arising out of any Security Breaches. Unless otherwise
+ * explicitly approved by Infineon, the Software may not be used in any
+ * application where a failure of the Product or any consequences of the use
+ * thereof can reasonably be expected to result in personal injury.
 *******************************************************************************/
 
 /*******************************************************************************
@@ -45,6 +45,9 @@
 #include "cyabs_rtos.h"
 
 
+#ifdef ENABLE_IFX_AGC
+#include "app_agc.h"
+#endif /* ENABLE_IFX_AGC */
 /*******************************************************************************
 * Macros
 *******************************************************************************/
@@ -60,6 +63,10 @@
 #if INFER_TASK_EN
 extern QueueHandle_t infer_queue_handle;
 #endif /* INFER_TASK_EN */
+
+#ifdef ENABLE_IFX_AGC
+extern int16_t *agc_output_frame;
+#endif /* ENABLE_IFX_AGC */
 
 TaskHandle_t rtos_ae_usb_task;
 QueueHandle_t ae_usb_queue_handle;
@@ -81,19 +88,31 @@ void audio_enhancement_process_output(ae_buffer_info_t *output_buffer)
 {
     
     BaseType_t ret = pdTRUE;
+    int16_t * infer_buffer=output_buffer->output_buf;
+    
+#if defined(ENABLE_IFX_AGC)
+    int16_t *agc_output = agc_output_frame;
+    if (agc_process(infer_buffer,agc_output)==AGC_SUCCESS)
+    {
+        infer_buffer = agc_output;
+    } else 
+    {
+        app_log_print("AGC failed \r\n");
+    }
+#endif /* ENABLE_IFX_AGC */
 
 
-#if INFER_TASK_EN
+#if INFER_TASK_EN /* Only for MCPS benchmarking */
     if (infer_queue_handle !=NULL)
     {
-        ret = xQueueSend(infer_queue_handle, (void*)output_buffer->output_buf, 0);
+        ret = xQueueSend(infer_queue_handle, (void*)infer_buffer, 0);
     }
     if (pdTRUE != ret)
     {
         app_log_print(">>> Send failed to inferencing task - Queue full \r\n");
     }
 #else
-    mains_powered_inference_feed(output_buffer->output_buf);
+    mains_powered_inference_feed(infer_buffer);
 #endif /* INFER_TASK_EN */
  
     if (ae_usb_queue_handle !=NULL)
@@ -147,6 +166,10 @@ int mains_powered_ae_init(int channels)
     cy_profiler_init();
     cy_afe_profile(AFE_PROFILE_CMD_ENABLE,NULL);
 #endif /* AE_APP_PROFILE */
+
+#ifdef ENABLE_IFX_AGC
+    agc_init();
+#endif /* ENABLE_IFX_AGC*/
 
     ae_usb_queue_handle = xQueueCreate(AE_USB_QUEUE_ELEMENTS, AE_USB_QUEUE_SIZE);
     if (ae_usb_queue_handle == NULL)
@@ -226,15 +249,11 @@ void mains_powered_ae_usb_task(void *arg)
 
             ae_usb_data_ptr = (ae_buffer_info_t*)ae_usb_data;
     
-#ifdef STEREO_USB_MODE
-            usb_send_out_dbg_put(USB_CHANNEL_1,(int16_t *)ae_usb_data_ptr->dbg_output1);
-            usb_send_out_dbg_put(USB_CHANNEL_2,(int16_t *)ae_usb_data_ptr->dbg_output2);
-#else  
             usb_send_out_dbg_put(USB_CHANNEL_1,(int16_t *)ae_usb_data_ptr->dbg_output1);
             usb_send_out_dbg_put(USB_CHANNEL_2,(int16_t *)ae_usb_data_ptr->dbg_output2);      
             usb_send_out_dbg_put(USB_CHANNEL_3,(int16_t *)ae_usb_data_ptr->dbg_output3);
             usb_send_out_dbg_put(USB_CHANNEL_4,(int16_t *)ae_usb_data_ptr->dbg_output4);
-#endif /* STEREO_USB_MODE */
+
         }
     }
 }

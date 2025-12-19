@@ -5,8 +5,8 @@
 *
 * Related Document : See README.md
 *******************************************************************************
-* (c) 2019-2024, Cypress Semiconductor Corporation (an Infineon company) or
-* an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2025, Cypress Semiconductor Corporation (an Infineon company)
+* All rights reserved.
 *******************************************************************************
 * This software, including source code, documentation and related materials
 * ("Software"), is owned by Cypress Semiconductor Corporation or one of its

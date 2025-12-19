@@ -6,8 +6,8 @@
 * Related Document : See README.md
 *
 *****************************************************************************
-* Copyright 2023-2024, Cypress Semiconductor Corporation (an Infineon company) or
-* an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2025, Cypress Semiconductor Corporation (an Infineon company)
+* All rights reserved.
 *
 * This software, including source code, documentation and related
 * materials ("Software") is owned by Cypress Semiconductor Corporation
@@ -52,6 +52,7 @@
 #include "U55_NMBmodel.h"
 
 #include "localvoice_music_nonum.h"
+#include "localvoice_music_nonum_ifx_va_config_prms.h"
 
 /* Following am_tensor_arena has been counted as part of persistent memory total size */
 /* Tensor_arena buffer must be in SOCMEM and aligned by 16 which are required by U55 */
@@ -98,13 +99,14 @@ static mtb_nlu_setup_array_t nlu_setup_array =
 
 // WW config
 static mtb_wwd_conf_t ww_conf = {
+    .ww_params = localvoice_music_nonum_dfww_prms,
     .callback.cb_for_event = CY_EVENT_SOD,
     .callback.cb_function = localvoice_music_nonum_wake_word_callback
 };
 
 // NLU config
 static mtb_nlu_config_t nlu_conf = {
-    .nlu_pre_silence_timeout = 2000,
+    .nlu_params = localvoice_music_nonum_dfcmd_prms,
     .nlu_command_timeout = 5000,
 };
 
@@ -113,6 +115,9 @@ static mtb_wwd_nlu_config_t ww_1_conf = {
     .cmd_model_ptr = localvoice_music_nonum_CMDmodeldata,
     .nmb_model_ptr = NMBmodeldata,
     .wwd_nlu_buff_data = &wwd_nlu_buff,
+    .sod_params = localvoice_music_nonum_sod_prms,
+    .hpf_params = localvoice_music_nonum_pre_proc_hpf_prms,
+    .denoise_params = localvoice_music_nonum_denoise_prms,
     .ww_conf = &ww_conf,
     .nlu_conf.nlu_config = &nlu_conf,
     .nlu_conf.nlu_variable_data = &nlu_setup_array,
@@ -137,7 +142,6 @@ const char* localvoice_music_nonum_intent_name_list[LOCALVOICE_MUSIC_NONUM_NUM_I
     "vol_level_3",
     "vol_level_4",
     "vol_level_5",
-    "goto_homescreen",
     "raise_volume_level",
     "lower_volume_level",
 };
@@ -222,21 +226,17 @@ const int localvoice_music_nonum_intent_map_array[LOCALVOICE_MUSIC_NONUM_INTENT_
     11, 0, // can you set volume to level four
     12, 0, // set volume to level five
     12, 0, // can you set volume to level five
-    13, 0, // go to homescreen
-    13, 0, // go back to homescreen
-    13, 0, // can you go to homescreen
-    13, 0, // can you go back to homescreen
-    14, 0, // I can't hear you
-    14, 0, // I cannot hear you
-    14, 0, // turn up the volume please
-    15, 0, // Music is too loud
-    15, 0, // turn down the volume please
+    13, 0, // I can't hear you
+    13, 0, // I cannot hear you
+    13, 0, // turn up the volume please
+    14, 0, // Music is too loud
+    14, 0, // turn down the volume please
 };
 
 const int localvoice_music_nonum_intent_map_array_sizes[LOCALVOICE_MUSIC_NONUM_NUM_COMMANDS] = {
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
 };
 
 const int localvoice_music_nonum_variable_phrase_sizes[LOCALVOICE_MUSIC_NONUM_NUM_VARIABLES] = {
@@ -308,16 +308,12 @@ const int localvoice_music_nonum_unit_phrase_map_array[LOCALVOICE_MUSIC_NONUM_UN
     0, // None
     0, // None
     0, // None
-    0, // None
-    0, // None
-    0, // None
-    0, // None
 };
 
 const int localvoice_music_nonum_unit_phrase_map_array_sizes[LOCALVOICE_MUSIC_NONUM_NUM_COMMANDS] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 };
 
 

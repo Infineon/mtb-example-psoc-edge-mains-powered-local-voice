@@ -170,6 +170,7 @@ Document title: *CE242044* – *PSOC&trade; Edge MCU: Mains-powered local voice*
  2.0.0   | GitHub release
  2.0.1   | Fix asset dependencies to latest tag for github release
  2.0.2   | Update to latest BSP, AFE and sync GFX configuration. PDM mic configured to 24bit with SW gain
+ 2.0.3   | Update music player flow with LPF, HPF. Add AGC that can be configured at compile-time. Update with latest Voice-Assistant and core algorithm libraries
 <br>
 
 
