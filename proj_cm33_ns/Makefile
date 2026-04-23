@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+# (c) 2025-2026, Infineon Technologies AG, or an affiliate of Infineon
 # Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -141,16 +141,6 @@ CY_GETLIBS_SHARED_NAME=mtb_shared
 # IDE provided compiler by default).
 CY_COMPILER_PATH?=
 
-CY_AVC_PATH=$(SEARCH_audio-voice-core)
-
-CY_IGNORE += $(SEARCH_ml-middleware)
-CY_IGNORE += $(SEARCH_ml-tflite-micro)
-CY_IGNORE += $(SEARCH_nnkernel)
-CY_IGNORE += $(SEARCH_emusb-device)
-CY_IGNORE += $(SEARCH_speech-onset-detection)
-CY_IGNORE += $(SEARCH_staged-voice-control)
-CY_IGNORE += imports/emusb-device
-CY_IGNORE += ${CY_AVC_PATH}
 
 
 include $(CY_TOOLS_DIR)/make/start.mk

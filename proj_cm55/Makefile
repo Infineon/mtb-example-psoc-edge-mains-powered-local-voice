@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+# (c) 2025-2026, Infineon Technologies AG, or an affiliate of Infineon
 # Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,8 +63,6 @@ DISABLE_COMPONENTS+=
 
 CORE=CM55
 CORE_NAME=CM55_0
-NPU=U55
-
 # By default the build system automatically looks in the Makefile's directory
 # tree for source code and builds it. The SOURCES variable can be used to
 # manually add source code to the build process from a location not searched
@@ -217,15 +215,9 @@ ifeq ($(CONFIG_INFERENCING_LIB),VOICE_ASSISTANT)
 
 endif
 
-# Neural Network Configuration. Options include
-#
-# float    -- floating point for the input data and weights
-# int8x8   -- 8-bit fixed-point for the input data and weights
+
 NN_TYPE=int16x8
 
-# Choose the inference engine
-# tflm      -- TensorFlow Lite for Microcontrollers inference engine with interpreter
-# Note tflm_less option is not supported on CM55+U55
 NN_INFERENCE_ENGINE=tflm
 
 NPU=U55
@@ -246,12 +238,10 @@ ifeq (tflm, $(NN_INFERENCE_ENGINE))
 endif
 
 DEFINES+= CY_ML_MODEL_MEM=.cy_socmem_data
-ifeq (int16x8, $(NN_TYPE))
-    COMPONENTS+=ML_INT16x8
-endif
-ifeq (int8x8, $(NN_TYPE))
-    COMPONENTS+=ML_INT8x8
-endif
+
+COMPONENTS+=ML_INT16x8
+
+
 
 #For USB building
 COMPONENTS += EMUSB
@@ -309,7 +299,7 @@ CY_VA_PATH=$(SEARCH_voice-assistant)
 #LVGL_PATH = ./source/modules/use_case/COMPONENT_MUSICPLAYER/COMPONENT_LVGL
 ifeq ($(CONFIG_GFX),GFX_ENABLE)
     CY_IGNORE += $(SEARCH_lvgl)/src/others/vg_lite_tvg $(SEARCH_lvgl)/src/libs/thorvg $(SEARCH_lvgl)/tests $(SEARCH_lvgl)/draw/nxp $(SEARCH_lvgl)/draw/renesas $(SEARCH_lvgl)/examples $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite.c $(SEARCH_lvgl)/src/draw/vg_lite/lv_vg_lite_utils.c $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite_img.c
-    CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/helium $(SEARCH_lvgl)/src/draw/sw/blend/neon $(SEARCH_lvgl)/demos/music $(SEARCH_lvgl)/src/core/lv_refr.c#TODO ignore 
+    CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/helium $(SEARCH_lvgl)/src/draw/sw/blend/neon $(SEARCH_lvgl)/demos/music $(SEARCH_lvgl)/src/core/lv_refr.c
 endif
 
 ifeq ($(CONFIG_GFX),GFX_DISABLE)

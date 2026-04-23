@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# (c) 2025, Infineon Technologies AG, or an affiliate of Infineon
+# (c) 2026, Infineon Technologies AG, or an affiliate of Infineon
 # Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -83,7 +83,7 @@ CONFIG_INFERENCING_LIB=VOICE_ASSISTANT
 ##########################################################################################
 ############################# Use Case ###################################################
 
-# Option to choose the the use-case
+# Option to choose the use-case
 # MUSIC_PLAYER  - Music Player use-case
 CONFIG_USECASE=MUSIC_PLAYER
 

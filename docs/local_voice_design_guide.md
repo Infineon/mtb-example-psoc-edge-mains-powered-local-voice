@@ -73,7 +73,7 @@ The code flow for the mains-powered configuration is shown here for the "Okay In
 
 ### Audio pipeline tuning and customization (how to's/tips)
 
-This section delves into the the customizability of the audio pipeline.
+This section delves into the customizability of the audio pipeline.
 
 The AFE Configurator tool lets you choose and customize the AFE components that run on PSOC&trade; Edge. It requires the AFE Configurator project file provided in the CE, available in: 
 *proj_cm55\source\mains_powered_application\audio_enhancement\mains_powered_ae_config.mtbafe*.
@@ -155,7 +155,7 @@ Ensure to connect USB cable to the "device port" of the kit so that PSOC&trade; 
 
 4. To view the four channels, use Audacity or the AFE Configurator:
 
-    - **Audacity:** Set the driver to WASAPI and set the channels to four by chosing the (Audio Control) Microphone. Set the **Sampling rate** to **16 kHz** and other settings as shown here:
+    - **Audacity:** Set the driver to WASAPI and set the channels to four by choosing the (Audio Control) Microphone. Set the **Sampling rate** to **16 kHz** and other settings as shown here:
 
       **Figure 9. Audacity: Configuration to view quad channel output**
       
@@ -207,7 +207,7 @@ Ensure to connect USB cable to the "device port" of the kit so that PSOC&trade; 
 
 For voice assistant model training and customization, Infineon has a cloud-based training framework. To access it, create an account at [DEEPCRAFT&trade; Voice Assistant cloud tool](https://deepcraft.infineon.com/solutions/voice-assistant). The tool uses a graph topology that lets you map the flow and train the model.
 
-**Figure 14. Voice assistant overview**
+**Figure 15. Voice assistant overview**
 
 ![](../images/va_overview.png)
 
@@ -221,13 +221,13 @@ For training a new cloud project,
 
     if you have an existing *.vaproj* file, select **Import Project**
   
-    **Figure 15. Design or import project**
+    **Figure 16. Design or import project**
     
   ![](../images/va_new_import.png)
 
-2. For adding a wakeword, like "Ok Infineon", select as shown here:
+2. For adding a wake word, like "Ok Infineon", select as shown here:
 
-    **Figure 16. Adding wakeword**
+    **Figure 17. Adding wakeword**
     
     ![](../images/va_wwd.png)
 
@@ -235,28 +235,28 @@ For training a new cloud project,
 
     > **Note:** In the image below, there are **Optional** and **Required** words in the command flow. It shows "can you play the song" where "can you" is optional word:
 
-    **Figure 17. Voice assistant commands**
+    **Figure 18. Voice assistant commands**
 
     ![](../images/va_command.png)
 
 4. Each command flow should be mapped to an intent. Choose the **Intent** option and add the intent label. Ensure to connect all the nodes
   
-    **Figure 18. Mapping command flow to intent**
+    **Figure 19. Mapping command flow to intent**
   
     ![](../images/va_intent.png)
 
 5. After adding all the commands and intent flows, choose the **CM55+U55** option (only this option is supported) and click **Generate**
   
-    **Figure 19. Choosing CM55+U55**
+    **Figure 20. Choosing CM55+U55**
 
     ![](../images/va_U55.png)
 
-    **Figure 20. Generating the model**
+    **Figure 21. Generating the model**
     ![](../images/va_generate.png)
 
 6. Once the model is generated, download the files
 
-    **Figure 21. Downloading files**
+    **Figure 22. Downloading files**
 
     ![](../images/va_download.png)
 
@@ -266,7 +266,7 @@ For training a new cloud project,
 
 9. Add the intent macros and command IDs for the new model in *proj_cm55\source\mains_powered_application\inferencing_interface\inferencing_interface.h*, for example:
 
-    **Figure 22. Adding command IDs and intent macros**
+    **Figure 23. Adding command IDs and intent macros**
       
     ![](../images/va_cmd_id_intent.png)
 
@@ -317,7 +317,7 @@ To enable LPF and HPF, set the following macros in
 
 The memory and MCPS of audio enhancement with all AFE components enabled on the PSOC&trade; Edge MCU are shown in here:
 
-**Figure 23. AE – memory and MCPS with AFE components**
+**Figure 24. AE – memory and MCPS with AFE components**
 
 ![](../images/memory_mcps.png)
 
@@ -343,7 +343,7 @@ The custom linker scripts are placed in:
 
 - *\templates\TARGET_KIT_PSE84_EVAL_EPC4\COMPONENT_CM55\TOOLCHAIN_LLVM_ARM\pse84_ns_cm55.ld*
 
-- *\templates\TARGET_KIT_PSE84_EVAL_EPC2\COMPONENT_CM55\TOOLCHAIN_ARM\pse84_ns_cm55.ld*
+- *\templates\TARGET_KIT_PSE84_EVAL_EPC2\COMPONENT_CM55\TOOLCHAIN_LLVM_ARM\pse84_ns_cm55.ld*
 
 Depending on the chosen compiler and BSP, one of these scripts is used. The custom linker scripts are auto-copied to the BSP folder while importing the project. If you make any modifications to them, you have to manually copy them to the *bsp* folder.
 
@@ -372,7 +372,7 @@ To profile Voice Assistant for the cycles:
 1. Enable the following in the *Makefile* of *proj_cm55*:
 
     ```
-    #For Profilier
+    #For Profiler
     COMPONENTS += PROFILER
     DEFINES += PROFILER_ENABLE
     ```
@@ -395,12 +395,38 @@ For normal functioning of the code ensure to set #define INFER_TASK_EN to 0. Set
 
 The MCPS for Voice Assistant is shown below,
 
-**Figure 23. Voice Assistant MCPS**
+**Figure 25. Voice Assistant MCPS**
 
 ![](../images/va_mcps.png)
 
 The memory requirements for Voice Assistant is shown below,
 
-**Figure 24. Voice Assistant Memory requirements**
+**Figure 26. Voice Assistant Memory requirements**
 
 ![](../images/va_memory.png)
+
+
+
+The performance of Voice Assistant under various noise conditions is shown below. 
+
+The details of the benchmarking is as following,
+1. With USB based input, test streams are fed into the audio pipeline
+
+2. The test streams are for close talker (1 feet)
+
+3. The test streams are augmented with noise (5 types) at 3 feet and 6 feet with the required SNR and Room Impulse Response (RIR) of PDM mic.
+
+**Figure 27. SNR details**
+
+![](../images/augmentation_snr_details.png)
+
+4. The test streams have both native (US accent) and non-native (Chinese accent) talkers.
+
+5. The benchmarking captures the detection statistics.
+
+6. Intent detected % means the % of intent matched though the detected command could vary with the same intent. Command detected % means the % of actual command matched.
+
+**Figure 28. Voice Assistant Performance benchmarking**
+
+![](../images/va_usb_benchmarking.png)
+

@@ -85,11 +85,12 @@ For more details, see the [Visual Studio Code for ModusToolbox&trade; user guide
 </details>
 
 
+
 If you prefer to use the CLI, open the appropriate terminal, and navigate to the project directory. On Windows, use the command-line 'modus-shell' program; on Linux and macOS, you can use any terminal application. From there, you can run various `make` commands.
 
 For more details, see the [ModusToolbox&trade; tools package user guide](https://www.infineon.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mtb_user_guide.pdf*).
 
-</details>
+
 
 
 ### Build and program onto the target
