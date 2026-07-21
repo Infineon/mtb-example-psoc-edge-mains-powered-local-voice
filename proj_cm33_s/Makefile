@@ -82,7 +82,6 @@ INCLUDES=
 DEFINES+=CYBSP_SKIP_MPC_INIT
 DEFINES+=CYBSP_SKIP_PPC_INIT
 
-# Select softfp or hardfp floating point. Default is softfp.
 VFP_SELECT+=
 
 # Additional / custom C compiler flags.

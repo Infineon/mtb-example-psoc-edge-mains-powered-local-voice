@@ -99,6 +99,12 @@ ifeq ($(CONFIG_GFX),GFX_ENABLE)
     CONFIG_DISPLAY = W4P3INCH_DISP
 endif
 COMPONENTS+=GFXSS
+
+# Suppress L6439W (multiply defined weak symbol) for ARM toolchain
+ifeq ($(TOOLCHAIN), ARM)
+LDFLAGS+=--diag_suppress=L6439W
+endif
+
 #########################################################################################
 
 # Search path for

@@ -78,7 +78,7 @@ DEFINES += CY_RTOS_AWARE
 
 DEFINES += FLASH_BOOT
 
-# Select softfp or hardfp floating point. Default is softfp.
+# This CE supports only hardfp.
 VFP_SELECT = hardfp
 
 # Additional / custom C compiler flags.
@@ -295,11 +295,82 @@ CY_SOD_PATH=$(SEARCH_speech-onset-detection)
 CY_VA_PATH=$(SEARCH_voice-assistant)
 
 # Ignore unused LVGL middleware files from compilation
-
-#LVGL_PATH = ./source/modules/use_case/COMPONENT_MUSICPLAYER/COMPONENT_LVGL
 ifeq ($(CONFIG_GFX),GFX_ENABLE)
-    CY_IGNORE += $(SEARCH_lvgl)/src/others/vg_lite_tvg $(SEARCH_lvgl)/src/libs/thorvg $(SEARCH_lvgl)/tests $(SEARCH_lvgl)/draw/nxp $(SEARCH_lvgl)/draw/renesas $(SEARCH_lvgl)/examples $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite.c $(SEARCH_lvgl)/src/draw/vg_lite/lv_vg_lite_utils.c $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite_img.c
-    CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/helium $(SEARCH_lvgl)/src/draw/sw/blend/neon $(SEARCH_lvgl)/demos/music $(SEARCH_lvgl)/src/core/lv_refr.c
+# --- Platform-specific draw backends (not needed for PSoC Edge) ---
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/nxp
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/renesas
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/dma2d
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/espressif
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/eve
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/nanovg
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/nema_gfx
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/opengles
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/sdl
+# Unused converts (premultiply uses C fallback; blend uses helium)
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/convert/helium
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/convert/neon
+# --- Architecture-specific SW blend (not for CM55) ---
+# Helium is ENABLED: ignore other MVE acceleration
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/neon
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/arm2d
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/sw/blend/riscv_v
+# --- Unused libraries ---
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/thorvg
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/FT800-FT813
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/frogfs
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/gltf
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/gstreamer
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/libwebp
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/nanovg
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/svg
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/vg_lite_driver
+# --- Unused debugging/test/simulator ---
+CY_IGNORE += $(SEARCH_lvgl)/src/debugging/test
+CY_IGNORE += $(SEARCH_lvgl)/src/debugging/vg_lite_tvg
+CY_IGNORE += $(SEARCH_lvgl)/src/debugging/monkey
+# --- Unused test suites, examples, env support ---
+CY_IGNORE += $(SEARCH_lvgl)/tests
+CY_IGNORE += $(SEARCH_lvgl)/examples
+CY_IGNORE += $(SEARCH_lvgl)/env_support
+# --- Unused display/input/draw drivers (we use custom lv_port_disp/indev) ---
+CY_IGNORE += $(SEARCH_lvgl)/src/drivers
+# --- Unused libraries (ignoring saves significant ITCM) ---
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/barcode
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/ffmpeg
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/freetype
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/fsdrv
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/gif
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/libjpeg_turbo
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/libpng
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/lz4
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/rlottie
+CY_IGNORE += $(SEARCH_lvgl)/src/libs/tiny_ttf
+# --- Unused widgets ---
+CY_IGNORE += $(SEARCH_lvgl)/src/widgets/property
+CY_IGNORE += $(SEARCH_lvgl)/src/widgets/3dtexture
+CY_IGNORE += $(SEARCH_lvgl)/src/widgets/gif
+CY_IGNORE += $(SEARCH_lvgl)/src/widgets/lottie
+CY_IGNORE += $(SEARCH_lvgl)/src/widgets/arclabel
+# --- Unused stdlib variants ---
+CY_IGNORE += $(SEARCH_lvgl)/src/stdlib/micropython
+CY_IGNORE += $(SEARCH_lvgl)/src/stdlib/rtthread
+CY_IGNORE += $(SEARCH_lvgl)/src/stdlib/uefi
+# --- Unused font manager ---
+CY_IGNORE += $(SEARCH_lvgl)/src/font/font_manager
+# --- Unused demos ---
+CY_IGNORE += $(SEARCH_lvgl)/demos/gltf
+CY_IGNORE += $(SEARCH_lvgl)/demos/render
+CY_IGNORE += $(SEARCH_lvgl)/demos/vector_graphic
+CY_IGNORE += $(SEARCH_lvgl)/demos/keypad_encoder
+CY_IGNORE += $(SEARCH_lvgl)/demos/stress
+CY_IGNORE += $(SEARCH_lvgl)/demos/music
+# --- Ignore mtb_shared originals; patched versions are in proj_cm55 ---
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite.c
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/vg_lite/lv_draw_vg_lite_img.c
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/vg_lite/lv_vg_lite_utils.c
+# --- Helium convert: local override skips helium premultiply (uses C fallback) ---
+CY_IGNORE += $(SEARCH_lvgl)/src/draw/convert/lv_draw_buf_convert.c
+
 endif
 
 ifeq ($(CONFIG_GFX),GFX_DISABLE)

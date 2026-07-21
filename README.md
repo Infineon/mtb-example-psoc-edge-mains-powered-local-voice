@@ -1,6 +1,6 @@
 # PSOC&trade; Edge MCU: Mains-powered local voice
 
-This code example illustrates Infineon's PSOC&trade; Edge MCU's "local voice", which refers to its ability to perform speech recognition, audio processing, inferencing, and triggering actions locally at the edge, without relying on cloud connectivity or external servers. 
+This code example illustrates Infineon's PSOC&trade; Edge MCU's "local voice", which refers to its ability to perform speech recognition, audio processing, inferencing, and triggering actions locally at the edge, without relying on cloud connectivity or external servers.
 
 This example showcases Infineon’s comprehensive solution for voice and audio applications with PSOC&trade; Edge MCU. It demonstrates how to use an audio pipeline on the Arm&reg; Cortex&reg; M55 core starting from audio capture, audio data processing with Infineon's DEEPCRAFT&trade; audio enhancement (AE), audio data inferencing with Infineon's DEEPCRAFT&trade; voice assistant (VA), post processing of inferred results, and performing actions based on the results. Both VA and AE components (noise suppression and echo suppression) utilize Ethos-U55.
 
@@ -15,7 +15,7 @@ The following image shows a high-level overview of the audio pipeline:
 
 This code example has a three project structure - CM33 Secure, CM33 Non-Secure, and CM55 projects. All three projects are programmed to the external Octal SPI (OSPI) flash and executed in XIP mode. Critical codes are executed from SoCMEM and Tightly Coupled Memories (TCM). Extended Boot launches the custom CM33 Secure project loaded to RRAM , which then configures the protection settings, OSPI flash and launches the CM33 Non-Secure application. Additionally, CM33 Non-Secure application enables CM55 CPU and launches the CM55 application.
 
-The example uses Peripheral Driver Library (PDL) for peripherals such as PDM-PCM, LED, I2S, and GPIO. The TLV320DAC3100 codec is used for playing audio data sent via I2S to the onboard loudspeaker. The example also uses 4.3 inch screen (Waveshare 4.3 inch Raspberry-Pi DSI LCD C 800480 pixel display). 
+The example uses Peripheral Driver Library (PDL) for peripherals such as PDM-PCM, LED, I2S, and GPIO. The TLV320DAC3100 codec is used for playing audio data sent via I2S to the onboard loudspeaker. The example also uses 4.3 inch screen (Waveshare 4.3 inch Raspberry-Pi DSI LCD C 800480 pixel display).
 
 > **Note:**
 
@@ -28,7 +28,7 @@ The example uses Peripheral Driver Library (PDL) for peripherals such as PDM-PCM
 > 4. On 15 minute timeout, the code will stop. See the Terminal output for more information, reset the board
 
 > 5. To use the mp3 decoder for music player playback, ModusToolbox&trade; Audio SW Codecs Tech Pack should be installed which is a licensed tech pack. Else the music playback will be with wav files. See [Using the code example](docs/using_the_code_example.md)
- 
+
 
 
 ## Requirements
@@ -78,7 +78,7 @@ See the [ModusToolbox&trade; tools package installation guide](https://www.infin
 
 	> **Note:** Arm&reg; account and license is required for the [Arm&reg; compiler](https://developer.arm.com/downloads/view/ACOMPE).
 
-	Alternatively, install the [LLVM](https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/tag/release-19.1.5) compiler, which does not require a license. 
+	Alternatively, install the [LLVM](https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/tag/release-19.1.5) compiler, which does not require a license.
 
 	Depending on your choice of compiler (Arm&reg;, LLVM), set these env variables on the PC settings or uncomment in *common.mk* and set the path:
 
@@ -101,12 +101,12 @@ See the [ModusToolbox&trade; tools package installation guide](https://www.infin
 
 	![](./images/music_player_listening.png)
 
-2. After the board is booted up, say the wake word "Okay Infineon". 
+2. After the board is booted up, say the wake word "Okay Infineon".
 
 	On successful detection, red and green LEDs will glow. If graphics is enabled, the following is displayed, indicating that the kit is waiting for commands
 
 	**Figure 3. Music player graphics – Kit waiting for commands**
-	
+
 	![](./images/music_player_wwd.png)
 
 3. After the red and green LEDs glow, speak any of the supported commands or intents as shown in **Figure 4** over UART
@@ -120,15 +120,15 @@ See the [ModusToolbox&trade; tools package installation guide](https://www.infin
 4. On successful command detection, observe the blue LED glow along with the red, and the green LED with a graphical transition on the screen
 
 	When the board is in music playback state, all 3 LEDs continue to glow until `End Music` command is inferred.
-	
+
 	When the board is not in music playback state, commands such as `Raise Volume` or `Lower Volume` make the LEDs go back off once they are processed
 
 5. Monitor the UART terminal for the detection status; the terminal should print the detection results
 
-6. The LED transitions are only for voice based activation and not for the push-to-talk (PTT) feature and graphics control. The LED transitions are meant for any use-case without any display. 
+6. The LED transitions are only for voice based activation and not for the push-to-talk (PTT) feature and graphics control. The LED transitions are meant for any use-case without any display.
 
 	For PTT, press the User BTN1 and directly speak the command. Its purpose is to bypass the wakeword.
- 
+
 	> **Note:** PTT is only supported for PDM microphone input configurations – and not for USB input configurations. PTT is enabled both during active music playback and listening states – command detection occurs if speech is detected
 
 > **Note:** With graphics enabled, you can control the screen and functionality via touch instead of voice/audio.
@@ -171,6 +171,7 @@ Document title: *CE242044* – *PSOC&trade; Edge MCU: Mains-powered local voice*
  2.0.2   | Update to latest BSP, AFE and sync GFX configuration. PDM mic configured to 24bit with SW gain
  2.0.3   | Update music player flow with LPF, HPF. Add AGC that can be configured at compile-time. Update with latest Voice-Assistant and core algorithm libraries
  2.0.4   | Update audio-voice-core asset to version 3.0
+ 2.1.0   | Added support for LVGL v9.5.0
 <br>
 
 

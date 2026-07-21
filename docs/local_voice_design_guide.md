@@ -31,7 +31,7 @@ The audio frames from the PDM microphone are fed into audio enhancement (AE). Th
 
 The audio front end (AFE) middleware has multiple software components:
 
-- High-pass filter 
+- High-pass filter
 - Analysis
 - Acoustic echo cancellation (AEC)
 - Beamforming
@@ -42,12 +42,12 @@ The audio front end (AFE) middleware has multiple software components:
 
 The audio data flows through each component of AFE depending on whether they are enabled or not. The microphone data is then filtered using a high-pass filter to remove any low-frequency noise or interference. The AEC block uses a reference/playback audio data to cancel out any acoustic echoes. The noise suppression component is used to reduce background noise and improve the clarity of the audio signal. Overall, the AFE components work together to enhance the quality of the audio signal and improve the inferencing performance.
 
-The Noise suppression and Echo suppression components are ML-based and are executed on Ethos-U55. The processed audio data is then sent to the voice assistant for wake word detection and automatic speech recognition. 
+The Noise suppression and Echo suppression components are ML-based and are executed on Ethos-U55. The processed audio data is then sent to the voice assistant for wake word detection and automatic speech recognition.
 
 See this file for all the commands depending on the voice assistant project loaded to the code example:
 *proj_cm55\source\mains_powered_application\inferencing_interface\COMPONENT_VOICE_ASSISTANT\va_model\command_list_[project_name].txt*.
 
-In music player configuration, the three LEDs glow when the music playback is ongoing – They turn off only if you give the `End Music` command. If you speak the wake word when music is playing, music playback gets paused to listen to the commands. Music does not pause for the push-to-talk feature. 
+In music player configuration, the three LEDs glow when the music playback is ongoing – They turn off only if you give the `End Music` command. If you speak the wake word when music is playing, music playback gets paused to listen to the commands. Music does not pause for the push-to-talk feature.
 
 For the music player use case, the played audio is used as AEC reference. If the input source is USB, no AEC is performed as it cannot pick up echoes from the speaker.
 
@@ -59,7 +59,7 @@ The following picture shows the high-level folder organization of the code examp
 **Figure 1. High-level folder organization**
 
 ![](../images/code_structure.png)
- 
+
 
 ### Code flow
 
@@ -69,23 +69,23 @@ The code flow for the mains-powered configuration is shown here for the "Okay In
 **Figure 2. Code flow for mains-powered configuration**
 
 ![](../images/mains_powered_code_flow.svg)
-   
+
 
 ### Audio pipeline tuning and customization (how to's/tips)
 
 This section delves into the customizability of the audio pipeline.
 
-The AFE Configurator tool lets you choose and customize the AFE components that run on PSOC&trade; Edge. It requires the AFE Configurator project file provided in the CE, available in: 
+The AFE Configurator tool lets you choose and customize the AFE components that run on PSOC&trade; Edge. It requires the AFE Configurator project file provided in the CE, available in:
 *proj_cm55\source\mains_powered_application\audio_enhancement\mains_powered_ae_config.mtbafe*.
 
-Open this project file using **any one** of the following steps: 
+Open this project file using **any one** of the following steps:
 
 - Open *mains_powered_ae_config.mtbafe* using the AFE Configurator tool via Eclipse IDE
 
 - Click **Audio FE Configurator** under **proj_cm55** in Eclipse IDE
-    
+
 - If not using Eclipse IDE, open the *proj_cm55* folder in the modus-shell and run `make audio-fe-configurator`
-    
+
 - Open the *mains_powered_ae_config.mtbafe* via *audio-fe-configurator.exe* located in *C:\Users\[username]\Infineon\Tools\DEEPCRAFT-Audio-Enhancement-Tech-Pack\tools\audio-fe-configurator*
 
 The PDM mic mode is controlled by the AFE Configurator. To choose between mono or stereo input, choose the options as:
@@ -93,22 +93,22 @@ The PDM mic mode is controlled by the AFE Configurator. To choose between mono o
 **Figure 3. AFE Configurator: Choose between mono or stereo input**
 
 ![](../images/afe_pdm_mic.png)
-    
+
 If you select **USB Audio Out**, the PDM mic is not enabled. You can stream audio via USB for benchmarking. In **USB Audio Out** mode, it is always stereo input.
 
-The AFE Configurator generates *cy_afe_configurator_settings.c* and *cy_afe_configurator_settings.h* files when saving the project containing the AFE filter settings and other options such as the components enabled. AFE relies on statically compiled files for this operation. 
+The AFE Configurator generates *cy_afe_configurator_settings.c* and *cy_afe_configurator_settings.h* files when saving the project containing the AFE filter settings and other options such as the components enabled. AFE relies on statically compiled files for this operation.
 
 The GeneratedSource contains the _*.c_ and _*.h_ files and these codes are automatically built during the build process. They are available at *proj_cm55\source\mains_powered_application\audio_enhancement\GeneratedSource*
 
-A limited set of parameters can be set dynamically using AFE Configurator. To send the parameters to the PSOC&trade; Edge MCU: 
+A limited set of parameters can be set dynamically using AFE Configurator. To send the parameters to the PSOC&trade; Edge MCU:
 
 1. Close Tera Term or any other UART Terminal windows on the PC
 
 2. Connect the AFE Configurator to the PSOC&trade; Edge MCU.
 
-    The AFE Configurator command/response is communicated via UART. Since the same KitProg3 USB UART is used for debugging, once AFE Configurator is connected, all logs from the PC are diverted to AFE Configurator log file, saved on the PC while syncing the settings. 
+    The AFE Configurator command/response is communicated via UART. Since the same KitProg3 USB UART is used for debugging, once AFE Configurator is connected, all logs from the PC are diverted to AFE Configurator log file, saved on the PC while syncing the settings.
 
-    To see the logs, switch between TeraTerm and AFE Configurator 
+    To see the logs, switch between TeraTerm and AFE Configurator
 
 3. To connect the AFE Configurator to the kit, select the icon as shown here:
 
@@ -123,15 +123,15 @@ A limited set of parameters can be set dynamically using AFE Configurator. To se
     ![](../images/afe_connected.png)
 
     Set the following parameters dynamically using AFE Configurator:
- 
+
     **Figure 6. Dynamic configuration**
-  
+
     ![](../images/afe_dynamic_values.png)
-  
+
     For example, to disable **Noise Suppression**, unselect **Noise Suppression** and select **Sync filter settings** > **Load to device**
-    
+
     **Figure 7. Dynamic configuration – Example**
-    
+
     ![](../images/dynamic_configuration.png)
 
 5. Check the processed audio recorded via Audacity. Noise suppression should be disabled and the processed audio should have background noise
@@ -141,12 +141,12 @@ A limited set of parameters can be set dynamically using AFE Configurator. To se
 
 The example also supports debugging or tuning the AFE via USB. By default in this code example, the PSOC&trade; Edge MCU is enumerated as a 4-channel/quad microphone to the PC. This mode is for debugging or tuning and to understand the AFE output for each of its components.
 
-Ensure to connect USB cable to the "device port" of the kit so that PSOC&trade; Edge MCU kit enumerates to the PC as 4 channel mic (Microphone-Audio Control) and Stereo speaker (Speaker-Audio Control) 
+Ensure to connect USB cable to the "device port" of the kit so that PSOC&trade; Edge MCU kit enumerates to the PC as 4 channel mic (Microphone-Audio Control) and Stereo speaker (Speaker-Audio Control)
 
 1. Choose the four individual channels to debug using the AFE Configurator:
-   
+
     **Figure 8. AFE Configurator: Choosing individual channels**
-    
+
     ![](../images/afe_configurator_usb.png)
 
 2. After choosing the required data to stream back from the PSOC&trade; Edge MCU to PC, save the AFE project
@@ -158,38 +158,38 @@ Ensure to connect USB cable to the "device port" of the kit so that PSOC&trade; 
     - **Audacity:** Set the driver to WASAPI and set the channels to four by choosing the (Audio Control) Microphone. Set the **Sampling rate** to **16 kHz** and other settings as shown here:
 
       **Figure 9. Audacity: Configuration to view quad channel output**
-      
+
       ![](../images/audacity_driver.png)
 
       This lets you view the quad channel output to debug AFE
 
       **Figure 10. Audacity: Quad channel display**
-      
+
       ![](../images/audacity_four_channel.png)
 
-    - **AFE Configurator:** 
+    - **AFE Configurator:**
       1. Connect AFE Configurator to the device <br>
 
       2. Select the play icon, record for a while, and press the stop icon
-      
+
           **Figure 11. AFE Configurator: Play icon**
-          
+
           ![](../images/afe_usb_play_button.png)
-      
+
           **Figure 12. AFE Configurator: Stop icon**
-          
+
           ![](../images/afe_usb_stop_button.png)
-          
+
           This makes AFE Configurator display the four channels:
-          
+
           **Figure 13. AFE Configurator: Quad channel display**
-          
+
           ![](../images/afe_quad_channel_display.png)
- 
+
       3. Press stop and save the quad channel audio using the save recording icon
-      
+
           **Figure 14. AFE Configurator: Save icon**
-          
+
           ![](../images/afe_save_recording.png)
 
       4. Use Audacity to import the file for further analysis
@@ -215,23 +215,23 @@ This code example includes the default voice assistant project file for music pl
 
 For training a new cloud project,
 
-1. After logging in, select **Design New Project** for a new project 
+1. After logging in, select **Design New Project** for a new project
 
     or,
 
     if you have an existing *.vaproj* file, select **Import Project**
-  
+
     **Figure 16. Design or import project**
-    
+
   ![](../images/va_new_import.png)
 
 2. For adding a wake word, like "Ok Infineon", select as shown here:
 
     **Figure 17. Adding wakeword**
-    
+
     ![](../images/va_wwd.png)
 
-3. To add the commands, select the **Text** options. To add numbers, select **Variables**. Ensure to add the required details in the **Properties** tab on the right. 
+3. To add the commands, select the **Text** options. To add numbers, select **Variables**. Ensure to add the required details in the **Properties** tab on the right.
 
     > **Note:** In the image below, there are **Optional** and **Required** words in the command flow. It shows "can you play the song" where "can you" is optional word:
 
@@ -240,13 +240,13 @@ For training a new cloud project,
     ![](../images/va_command.png)
 
 4. Each command flow should be mapped to an intent. Choose the **Intent** option and add the intent label. Ensure to connect all the nodes
-  
+
     **Figure 19. Mapping command flow to intent**
-  
+
     ![](../images/va_intent.png)
 
 5. After adding all the commands and intent flows, choose the **CM55+U55** option (only this option is supported) and click **Generate**
-  
+
     **Figure 20. Choosing CM55+U55**
 
     ![](../images/va_U55.png)
@@ -267,7 +267,7 @@ For training a new cloud project,
 9. Add the intent macros and command IDs for the new model in *proj_cm55\source\mains_powered_application\inferencing_interface\inferencing_interface.h*, for example:
 
     **Figure 23. Adding command IDs and intent macros**
-      
+
     ![](../images/va_cmd_id_intent.png)
 
     Or,
@@ -350,7 +350,7 @@ Depending on the chosen compiler and BSP, one of these scripts is used. The cust
 The code example also uses *custom design.modus* for memory section changes, *design.qspi* for Octal SPI flash that has improved performance,
 and the custom secure project that executes from the RRAM.
 
-To profile the AFE middleware for the cycles: 
+To profile the AFE middleware for the cycles:
 
 1. Enable the following in the *Makefile* of *proj_cm55*:
 
@@ -360,8 +360,8 @@ To profile the AFE middleware for the cycles:
     DEFINES += PROFILER_ENABLE
     ```
 
-2. Enable the following flag in 
-*proj_cm55\source\mains_powered_application\audio_enhancement\audio_enhancement_interface.h*:
+2. Enable the following flag in
+*proj_cm55/source/mains_powered_application/audio_enhancement/audio_enhancement_interface.h*:
 
     ```
     #define AE_APP_PROFILE  (1)
@@ -377,21 +377,13 @@ To profile Voice Assistant for the cycles:
     DEFINES += PROFILER_ENABLE
     ```
 
-2. Enable the following flag in 
-*proj_cm55\source\mains_powered_application\audio_enhancement\audio_enhancement_interface.h*:
+2. Enable the following flag in
+*proj_cm55/source/mains_powered_application/inferencing_interface/inferencing_interface.h*:
 
     ```
     #define INFERENCING_PROFILE  (1)
     ```
 
-3. Enable inferencing via a RTOS task so that inferencing MCPS can be checked along with AE MCPS, 
-*proj_cm55\source\mains_powered_application\inferencing_interface\inferencing_task.h*:
-
-    ```
-    #define INFER_TASK_EN           (1)
-    ```
-
-For normal functioning of the code ensure to set #define INFER_TASK_EN to 0. Set to 1 only for profiling. <br>
 
 The MCPS for Voice Assistant is shown below,
 
@@ -407,7 +399,7 @@ The memory requirements for Voice Assistant is shown below,
 
 
 
-The performance of Voice Assistant under various noise conditions is shown below. 
+The performance of Voice Assistant under various noise conditions is shown below.
 
 The details of the benchmarking is as following,
 1. With USB based input, test streams are fed into the audio pipeline
@@ -430,3 +422,15 @@ The details of the benchmarking is as following,
 
 ![](../images/va_usb_benchmarking.png)
 
+### Arm&reg; Helium (M-Profile Vector Extension) acceleration for Graphics
+
+This code example by default enables Arm&reg; Helium (M-Profile Vector Extension) acceleration for both audio pipeline and the graphics. For graphics, (LVGL's software blend operations), the following macros in *lv_conf.h* control this:
+
+```c
+#define LV_USE_NATIVE_HELIUM_ASM  1
+#define LV_USE_DRAW_SW_ASM        LV_DRAW_SW_ASM_HELIUM
+```
+
+When enabled, LVGL uses optimized Helium vector intrinsics for pixel blending, alpha compositing, and color-format conversions. This significantly improves software rendering throughput on the CM55 core. To revert to scalar C code, set `LV_USE_NATIVE_HELIUM_ASM` to `0` and `LV_USE_DRAW_SW_ASM` to `LV_DRAW_SW_ASM_NONE`.
+
+> **Note:** Enabling Helium ASM requires that the CM55 core's MVE unit is active.

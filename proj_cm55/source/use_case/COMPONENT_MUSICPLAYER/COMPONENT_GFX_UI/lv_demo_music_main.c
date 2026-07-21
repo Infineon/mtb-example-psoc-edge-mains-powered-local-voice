@@ -1017,7 +1017,7 @@ static void spectrum_draw_event_cb(lv_event_t * e)
 
         lv_draw_triangle_dsc_t draw_dsc;
         lv_draw_triangle_dsc_init(&draw_dsc);
-        draw_dsc.bg_opa = LV_OPA_COVER;
+        draw_dsc.opa = LV_OPA_COVER;
 
         uint16_t r[64];
         uint32_t i;
@@ -1073,11 +1073,11 @@ static void spectrum_draw_event_cb(lv_event_t * e)
                 v = (r[k] * animv + r[j] * (amax - animv)) / amax;
             }
 
-            if(v < BAR_COLOR1_STOP) draw_dsc.bg_color = BAR_COLOR1;
-            else if(v > (uint32_t)BAR_COLOR3_STOP) draw_dsc.bg_color = BAR_COLOR3;
-            else if(v > BAR_COLOR2_STOP) draw_dsc.bg_color = lv_color_mix(BAR_COLOR3, BAR_COLOR2,
+            if(v < BAR_COLOR1_STOP) draw_dsc.color = BAR_COLOR1;
+            else if(v > (uint32_t)BAR_COLOR3_STOP) draw_dsc.color = BAR_COLOR3;
+            else if(v > BAR_COLOR2_STOP) draw_dsc.color = lv_color_mix(BAR_COLOR3, BAR_COLOR2,
                                                                               ((v - BAR_COLOR2_STOP) * 255) / (BAR_COLOR3_STOP - BAR_COLOR2_STOP));
-            else draw_dsc.bg_color = lv_color_mix(BAR_COLOR2, BAR_COLOR1,
+            else draw_dsc.color = lv_color_mix(BAR_COLOR2, BAR_COLOR1,
                                                       ((v - BAR_COLOR1_STOP) * 255) / (BAR_COLOR2_STOP - BAR_COLOR1_STOP));
 
             uint32_t di = deg + deg_space;
@@ -1265,6 +1265,14 @@ static void info_event_click_cb(lv_event_t * e)
     lv_obj_set_size(mbox, 380, 380);
     lv_obj_set_style_align(mbox, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(mbox, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+#if LV_USE_NATIVE_HELIUM_ASM
+    /* Disable clip_corner to avoid rendering through an ARGB8888 layer.
+     * The Helium ASM blend-to-ARGB8888 path produces visual artifacts
+     * (black bars) on this platform. Disabling clip_corner keeps all
+     * text rendering on the native RGB565 buffer where Helium works correctly. */
+    lv_obj_set_style_clip_corner(mbox, false, LV_PART_MAIN | LV_STATE_DEFAULT);
+#endif
 
     lv_msgbox_add_close_button(mbox);
     lv_obj_set_style_text_font(mbox, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
