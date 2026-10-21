@@ -66,6 +66,7 @@ Argument | Description | Required/optional
 
 After the project has been created, you can open it in your preferred development environment.
 
+> **Note:** This CE is supported only in Eclipse IDE and Visual Studio (VS) Code.
 
 <details><summary><b>Eclipse IDE</b></summary>
 

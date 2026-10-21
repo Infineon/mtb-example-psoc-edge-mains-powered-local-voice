@@ -49,6 +49,25 @@
 #include "audio_input_configuration.h"
 
 /*******************************************************************************
+* Macros
+*******************************************************************************/
+#if defined(CYBSP_TDM_CONTROLLER_0_ENABLED)
+    #define APP_I2S_TDM_CONFIG              CYBSP_TDM_CONTROLLER_0_config
+    #define APP_I2S_TDM_CLK_DIV_GRP_NUM     CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM
+    #define APP_I2S_TDM_TX_IRQ              CYBSP_TDM_CONTROLLER_0_TX_IRQ
+    #define APP_I2S_TDM_STRUCT              TDM_STRUCT0
+    #define APP_I2S_TDM_STRUCT_TX           TDM_STRUCT0_TX
+#elif defined(CYBSP_TDM_CONTROLLER_1_ENABLED)
+    #define APP_I2S_TDM_CONFIG              CYBSP_TDM_CONTROLLER_1_config
+    #define APP_I2S_TDM_CLK_DIV_GRP_NUM     CYBSP_TDM_CONTROLLER_1_CLK_DIV_GRP_NUM
+    #define APP_I2S_TDM_TX_IRQ              CYBSP_TDM_CONTROLLER_1_TX_IRQ
+    #define APP_I2S_TDM_STRUCT              TDM_STRUCT1
+    #define APP_I2S_TDM_STRUCT_TX           TDM_STRUCT1_TX
+#else
+    #error "No CYBSP_TDM_CONTROLLER instance enabled in the BSP configuration"
+#endif
+
+/*******************************************************************************
 * Global Variables
 *******************************************************************************/
 mtb_hal_i2c_t MW_I2C_hal_obj;
@@ -63,7 +82,7 @@ mtb_hal_i2c_cfg_t i2c_config =
 };
 
 const cy_stc_sysint_t i2s_isr_txcfg = {
-    .intrSrc = (IRQn_Type) tdm_0_interrupts_tx_0_IRQn,
+    .intrSrc = (IRQn_Type) APP_I2S_TDM_TX_IRQ,
     .intrPriority = I2S_INTR_PRIORITY,
 };
 
@@ -140,7 +159,7 @@ static void app_i2s_init(void)
     Cy_SysInt_Init(&i2s_isr_txcfg, i2s_tx_interrupt_handler);
 
    /* Initialize the I2S */
-    cy_en_tdm_status_t volatile return_status = Cy_AudioTDM_Init(TDM_STRUCT0, &CYBSP_TDM_CONTROLLER_0_config);
+    cy_en_tdm_status_t volatile return_status = Cy_AudioTDM_Init(APP_I2S_TDM_STRUCT, &APP_I2S_TDM_CONFIG);
     if (CY_TDM_SUCCESS != return_status)
     {
         app_log_print(">>> Error: I2S init failed with error code: 0x%0lX\n", (unsigned long)return_status);
@@ -164,7 +183,7 @@ static void app_i2s_init(void)
 static void app_i2s_deinit(void)
 {
     /* De-initialize the I2S */
-    Cy_AudioTDM_DeInit(TDM_STRUCT0);
+    Cy_AudioTDM_DeInit(APP_I2S_TDM_STRUCT);
 }
 
 /*******************************************************************************
@@ -186,23 +205,23 @@ static void app_tlv_codec_init(uint32_t sampling_rate_hz)
 
     if (SAMPLING_RATE_16kHz == sampling_rate_hz)
     {
-        Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U);
-        Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U,
                                             I2S_CLK_DIV_16KHZ - 1, 0U);
-        Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U);
         mclk_hz = I2S_16KHZ_MCLK_HZ;
     }
     else
     {
-        Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkDisableDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U);
-        Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkSetFracDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U,
                                             I2S_CLK_DIV_48KHZ - 1, 0U);
-        Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)CYBSP_TDM_CONTROLLER_0_CLK_DIV_GRP_NUM,
+        Cy_SysClk_PeriPclkEnableDivider((en_clk_dst_t)APP_I2S_TDM_CLK_DIV_GRP_NUM,
                                             CY_SYSCLK_DIV_16_5_BIT, 0U);
         mclk_hz = I2S_48KHZ_MCLK_HZ;
     }
@@ -279,7 +298,7 @@ static void app_i2s_activate(void)
 {
     /* Activate and enable I2S TX interrupts */
     NVIC_EnableIRQ(i2s_isr_txcfg.intrSrc);
-    Cy_AudioTDM_ActivateTx(TDM_STRUCT0_TX);
+    Cy_AudioTDM_ActivateTx(APP_I2S_TDM_STRUCT_TX);
 }
 
 /******************************************************************************
@@ -303,11 +322,11 @@ static void app_i2s_deactivate(void)
     /* There is no API to clear the HW FIFO. Disabling and enabling the TX
      * will clear the FIFO as a side effect.
      */
-    Cy_AudioTDM_DeActivateTx(TDM_STRUCT0_TX);
-    Cy_AudioI2S_DisableTx(TDM_STRUCT0_TX);
-    Cy_AudioI2S_EnableTx(TDM_STRUCT0_TX);
-    Cy_AudioTDM_DeActivateTx(TDM_STRUCT0_TX);
-    Cy_AudioI2S_DisableTx(TDM_STRUCT0_TX);
+    Cy_AudioTDM_DeActivateTx(APP_I2S_TDM_STRUCT_TX);
+    Cy_AudioI2S_DisableTx(APP_I2S_TDM_STRUCT_TX);
+    Cy_AudioI2S_EnableTx(APP_I2S_TDM_STRUCT_TX);
+    Cy_AudioTDM_DeActivateTx(APP_I2S_TDM_STRUCT_TX);
+    Cy_AudioI2S_DisableTx(APP_I2S_TDM_STRUCT_TX);
 }
 
 /*******************************************************************************
@@ -326,18 +345,18 @@ static void app_i2s_deactivate(void)
 static void app_i2s_enable(void)
 {
     /* Enable the I2S TX interface */
-    Cy_AudioTDM_EnableTx(TDM_STRUCT0_TX);
+    Cy_AudioTDM_EnableTx(APP_I2S_TDM_STRUCT_TX);
 
     /* Clear TX interrupts */
-    Cy_AudioTDM_ClearTxInterrupt(TDM_STRUCT0_TX, CY_TDM_INTR_TX_MASK);
-    Cy_AudioTDM_SetTxInterruptMask(TDM_STRUCT0_TX, CY_TDM_INTR_TX_MASK);
+    Cy_AudioTDM_ClearTxInterrupt(APP_I2S_TDM_STRUCT_TX, CY_TDM_INTR_TX_MASK);
+    Cy_AudioTDM_SetTxInterruptMask(APP_I2S_TDM_STRUCT_TX, CY_TDM_INTR_TX_MASK);
 
     /* Fill TX FIFO with zeros to start the transmission */
     for(uint32_t i = 0; i < (HW_FIFO_SIZE / 2); i++)
     {
         /* Write data in FIFO */
-        Cy_AudioTDM_WriteTxData(TDM0_TDM_STRUCT0_TDM_TX_STRUCT, 0UL);
-        Cy_AudioTDM_WriteTxData(TDM0_TDM_STRUCT0_TDM_TX_STRUCT, 0UL);
+        Cy_AudioTDM_WriteTxData(APP_I2S_TDM_STRUCT_TX, 0UL);
+        Cy_AudioTDM_WriteTxData(APP_I2S_TDM_STRUCT_TX, 0UL);
     }
 }
 
@@ -357,11 +376,11 @@ static void app_i2s_enable(void)
 static void app_i2s_disable(void)
 {
     /* Enable the I2S TX interface */
-    Cy_AudioTDM_DisableTx(TDM_STRUCT0_TX);
+    Cy_AudioTDM_DisableTx(APP_I2S_TDM_STRUCT_TX);
 
     /* Clear TX interrupts */
-    Cy_AudioTDM_ClearTxInterrupt(TDM_STRUCT0_TX, CY_TDM_INTR_TX_MASK);
-    Cy_AudioTDM_ClearTxTriggerInterruptMask(TDM_STRUCT0_TX);
+    Cy_AudioTDM_ClearTxInterrupt(APP_I2S_TDM_STRUCT_TX, CY_TDM_INTR_TX_MASK);
+    Cy_AudioTDM_ClearTxTriggerInterruptMask(APP_I2S_TDM_STRUCT_TX);
 }
 
 /*******************************************************************************
@@ -608,7 +627,7 @@ static void i2s_tx_interrupt_handler(void)
     uint32_t i, intr_status;
     bool send_zeros = true;
     /* Get interrupt status and check for tigger interrupt and errors */
-    intr_status = Cy_AudioTDM_GetTxInterruptStatusMasked(TDM_STRUCT0_TX);
+    intr_status = Cy_AudioTDM_GetTxInterruptStatusMasked(APP_I2S_TDM_STRUCT_TX);
 
     if(CY_TDM_INTR_TX_FIFO_TRIGGER & intr_status)
     {
@@ -640,14 +659,14 @@ static void i2s_tx_interrupt_handler(void)
                 for (i = 0; i < HW_FIFO_SIZE; i++)
                 {
                     i2s_data = (uint32_t)(*i2s_tx_buffer++);
-                    Cy_AudioTDM_WriteTxData(TDM_STRUCT0_TX, i2s_data);
+                    Cy_AudioTDM_WriteTxData(APP_I2S_TDM_STRUCT_TX, i2s_data);
 
                     /* If the input data is mono channel, duplicate the samples for
                      * stereo I2S playback
                      */
                     if (CHANNELS_MONO == i2s_playback_q_data.num_channels)
                     {
-                        Cy_AudioTDM_WriteTxData(TDM_STRUCT0_TX, i2s_data);
+                        Cy_AudioTDM_WriteTxData(APP_I2S_TDM_STRUCT_TX, i2s_data);
                         i++;
                     }
                 }
@@ -664,7 +683,7 @@ static void i2s_tx_interrupt_handler(void)
         {
             for (i = 0; i < HW_FIFO_SIZE; i++)
             {
-                Cy_AudioTDM_WriteTxData(TDM_STRUCT0_TX, 0UL);
+                Cy_AudioTDM_WriteTxData(APP_I2S_TDM_STRUCT_TX, 0UL);
             }
         }
     }
@@ -674,7 +693,7 @@ static void i2s_tx_interrupt_handler(void)
     }
 
     /* Clear all TX I2S Interrupt */
-    Cy_AudioTDM_ClearTxInterrupt(TDM_STRUCT0_TX, CY_TDM_INTR_TX_MASK);
+    Cy_AudioTDM_ClearTxInterrupt(APP_I2S_TDM_STRUCT_TX, CY_TDM_INTR_TX_MASK);
 }
 
 /******************************************************************************
